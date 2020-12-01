@@ -1,7 +1,5 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import $ from "jquery";
-
+import "./assets/scss/main.scss";
 import {
 	BrowserRouter as Router,
 	Route,
@@ -67,14 +65,16 @@ const App = () => {
 		<div className="App">
 			<Router>
 				<Navbar />
-				<Switch>
-					<Route exact path="/">
-						<Home />
-					</Route>
-					<UnAuthRoute path="/signin" component={SigninPage} />
-					<UnAuthRoute path="/signup" component={SignupPage} />
-					<AuthRoute path="/profile" component={Profile} />
-				</Switch>
+				<section className="page">
+					<Switch>
+						<Route exact path="/">
+							<Home />
+						</Route>
+						<UnAuthRoute path="/signin" component={SigninPage} />
+						<UnAuthRoute path="/signup" component={SignupPage} />
+						<AuthRoute path="/profile" component={Profile} />
+					</Switch>
+				</section>
 			</Router>
 		</div>
 		// </ IntlProvider>
