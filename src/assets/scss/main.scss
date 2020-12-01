@@ -1,68 +1,123 @@
 @import "~bootstrap/scss/bootstrap";
 
-
-body{
+body {
     background-color: #f4f4f4;
 }
 
-.text-dark-light{
-    color:#515151;
+.text-dark-light {
+    color: #515151;
 }
 
-.text-dark-light-strong{
-    color:#171717
+.text-dark-light-strong {
+    color: #171717;
 }
 
-.bg-home{
+.bg-home {
     background-image: url(../../assets/img/home.jpg);
     background-position: left;
     background-size: cover;
 }
 
-.border-rounded{
+.border-rounded {
     border-radius: 2rem;
 }
 
-.border-neumorphic{
-    box-shadow: -5px 5px 10px rgba(140, 140, 140, 0.2), 5px -5px 10px rgba(140, 140, 140, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.9), 5px 5px 13px rgba(140, 140, 140, 0.9), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(140, 140, 140, 0.5);
+.border-neumorphic {
+    box-shadow: -5px 5px 10px rgba(140, 140, 140, 0.2), 5px -5px 10px rgba(140, 140, 140, 0.2),
+        -5px -5px 10px rgba(255, 255, 255, 0.9), 5px 5px 13px rgba(140, 140, 140, 0.9),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(140, 140, 140, 0.5);
     border-radius: 25px;
 }
 
-.btn-scheme{
-    background: linear-gradient(135deg, #FCFCFF 0%, #E4E4E7 100%);
-    box-shadow: -1px 1px 2px rgba(96, 96, 97, 0.2), 1px -1px 2px rgba(96, 96, 97, 0.2), -1px -1px 2px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(96, 96, 97, 0.9), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(96, 96, 97, 0.5);
+.btn-scheme {
+    background: linear-gradient(135deg, #fcfcff 0%, #e4e4e7 100%);
+    box-shadow: -1px 1px 2px rgba(96, 96, 97, 0.2), 1px -1px 2px rgba(96, 96, 97, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(96, 96, 97, 0.9),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(96, 96, 97, 0.5);
 }
 
-.btn-scheme-2{
-    background: #FFFFFF;
-    box-shadow: -1px 1px 2px rgba(102, 102, 102, 0.2), 1px -1px 2px rgba(102, 102, 102, 0.2), -1px -1px 2px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(102, 102, 102, 0.9), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(102, 102, 102, 0.5);
+.btn-scheme-2 {
+    background: #ffffff;
+    box-shadow: -1px 1px 2px rgba(102, 102, 102, 0.2), 1px -1px 2px rgba(102, 102, 102, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(102, 102, 102, 0.9),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(102, 102, 102, 0.5);
 }
 
-.checkbox-card{
+.checkbox-card {
     display: flex;
     align-items: center;
     justify-content: center;
-    p{
-        margin:0;
+    p {
+        margin: 0;
     }
 }
 
-.checkbox-card.selected{
-    border:2px solid rgb(120, 224, 120)
+.checkbox-card.selected {
+    border: 2px solid rgb(120, 224, 120);
 }
 
-#pevious-step{
+#pevious-step {
     position: absolute;
-    left:1.5rem;
-    top:1.5rem;
+    left: 1.5rem;
+    top: 1.5rem;
 }
 
-
-
-.checkbox{
+.checkbox {
     opacity: 0;
     height: 0;
-    width:0;
-    padding:0;
-    margin:0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+// @media screen and (max-width: 768px) {
+//     .container-card-room {
+
+//     }
+// }
+
+.card {
+    background: linear-gradient(135deg, #f2f2f2 0%, #ffffff 100%);
+    box-shadow: 5px -5px 10px rgba(224, 224, 224, 0.2), -5px 5px 10px rgba(224, 224, 224, 0.2),
+        5px 5px 10px rgba(255, 255, 255, 0.9), -5px -5px 13px rgba(224, 224, 224, 0.9),
+        inset -1px -1px 2px rgba(255, 255, 255, 0.3), inset 1px 1px 2px rgba(224, 224, 224, 0.5);
+}
+
+@media screen and (min-width: 768px) {
+    #container-card-room {
+        height: 75vh;
+        overflow: auto;
+    }
+}
+@media screen and (min-width: 768px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card-columns {
+        column-count: 1;
+    }
+}
+
+.card-search {
+    min-height: 75vh;
+    background: #ffffff;
+    box-shadow: -5px 5px 10px rgba(230, 230, 230, 0.2), 5px -5px 10px rgba(230, 230, 230, 0.2),
+        -5px -5px 10px rgba(255, 255, 255, 0.9), 5px 5px 13px rgba(230, 230, 230, 0.9),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(230, 230, 230, 0.5);
+    border-radius: 25px;
+    .search-zone {
+        background: #ffffff;
+        box-shadow: -1px 1px 2px rgba(102, 102, 102, 0.2), 1px -1px 2px rgba(102, 102, 102, 0.2),
+            -1px -1px 2px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(102, 102, 102, 0.9),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(102, 102, 102, 0.5);
+        border-radius: 25px;
+    }
+}
+
+
+.list-group-item{
+    border:none;
 }

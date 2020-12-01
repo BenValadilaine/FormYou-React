@@ -11,11 +11,13 @@ import Home from "./pages/Home";
 import SigninPage from "./pages/Signin";
 import SignupPage from "./pages/Signup";
 import Profile from "./pages/Profile";
+import FormationPage from "./pages/Formations";
 
 /* ===== INTL ========
 import { IntlProvider } from 'react-intl';
 import textFr from './translation/fr';
 import textEn from './translation/en';
+import FormationPage from './pages/Formations';
 
 const text = {
   fr: textFr,
@@ -69,6 +71,9 @@ const App = () => {
 					<Switch>
 						<Route exact path="/">
 							<Home />
+						</Route>
+						<Route exact path="/formations">
+							<FormationPage />
 						</Route>
 						<UnAuthRoute path="/signin" component={SigninPage} />
 						<UnAuthRoute path="/signup" component={SignupPage} />
