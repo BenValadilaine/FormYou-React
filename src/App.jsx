@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import SigninPage from "./pages/Signin";
 import SignupPage from "./pages/Signup";
 import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
 import FormationPage from "./pages/Formations";
 
 /* ===== INTL ========
@@ -56,7 +57,7 @@ const App = () => {
 				checkAuth() ? (
 					<Component {...props} />
 				) : (
-					<Redirect to={{ pathname: "/login" }} />
+					<Redirect to={{ pathname: "/signin" }} />
 				)
 			}
 		/>
@@ -78,6 +79,7 @@ const App = () => {
 						<UnAuthRoute path="/signin" component={SigninPage} />
 						<UnAuthRoute path="/signup" component={SignupPage} />
 						<AuthRoute path="/profile" component={Profile} />
+						<UnAuthRoute path="/admin" component={Admin} />
 					</Switch>
 				</section>
 			</Router>
