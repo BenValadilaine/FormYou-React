@@ -2,7 +2,7 @@ import React from "react";
 import Formation from '../components/Formation/index';
 import CardSearch from '../components/CardSearch/index';
 
-const FormationPage = () => {
+const FormationsPage = () => {
     return (
         <div className="container-fluid m-auto d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "95vh" }}>
 
@@ -49,4 +49,4 @@ const FormationPage = () => {
     )
 }
 
-export default FormationPage;
+export default FormationsPage;

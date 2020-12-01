@@ -11,8 +11,8 @@ import Home from "./pages/Home";
 import SigninPage from "./pages/Signin";
 import SignupPage from "./pages/Signup";
 import Profile from "./pages/Profile";
-import FormationPage from "./pages/Formations";
-
+import FormationsPage from "./pages/Formations";
+import FormationPage from "./pages/Formation";
 /* ===== INTL ========
 import { IntlProvider } from 'react-intl';
 import textFr from './translation/fr';
@@ -42,8 +42,8 @@ const App = () => {
 				checkAuth() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
-					<Component {...props} />
-				)
+						<Component {...props} />
+					)
 			}
 		/>
 	);
@@ -56,8 +56,8 @@ const App = () => {
 				checkAuth() ? (
 					<Component {...props} />
 				) : (
-					<Redirect to={{ pathname: "/login" }} />
-				)
+						<Redirect to={{ pathname: "/login" }} />
+					)
 			}
 		/>
 	);
@@ -73,10 +73,14 @@ const App = () => {
 							<Home />
 						</Route>
 						<Route exact path="/formations">
+							<FormationsPage />
+						</Route>
+						<Route exact path="/formation/:id">
 							<FormationPage />
 						</Route>
 						<UnAuthRoute path="/signin" component={SigninPage} />
 						<UnAuthRoute path="/signup" component={SignupPage} />
+						<Profile />
 						<AuthRoute path="/profile" component={Profile} />
 					</Switch>
 				</section>
