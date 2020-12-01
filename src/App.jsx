@@ -1,5 +1,5 @@
 import React from "react";
-import "./assets/scss/main.scss"
+import "./assets/scss/main.scss";
 import {
 	BrowserRouter as Router,
 	Route,
@@ -40,8 +40,8 @@ const App = () => {
 				checkAuth() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
-						<Component {...props} />
-					)
+					<Component {...props} />
+				)
 			}
 		/>
 	);
@@ -54,8 +54,8 @@ const App = () => {
 				checkAuth() ? (
 					<Component {...props} />
 				) : (
-						<Redirect to={{ pathname: "/login" }} />
-					)
+					<Redirect to={{ pathname: "/login" }} />
+				)
 			}
 		/>
 	);
