@@ -22,9 +22,9 @@ const Home = () => {
           <h1>Formez vous et vos collaborateurs tout au long de de votre vie grâce à FormYou &copy;</h1>
 
 
-          <h2 className="dark-light">Une solution innovante pour mettre l’entreprise et ses salariés au coeur du parcours individuel de formation</h2>
+          <h2 className="text-dark-light-strong">Une solution innovante pour mettre l’entreprise et ses salariés au coeur du parcours individuel de formation</h2>
 
-          <h3>Des aides sont possibles, demander conseil à nos experts ...</h3>
+          <h3 className="text-dark-light">Des aides sont possibles, demander conseil à nos experts ...</h3>
 
           <div>
             <button className="btn btn-lg col-md-4 col-12 btn-scheme">Les formations</button>
