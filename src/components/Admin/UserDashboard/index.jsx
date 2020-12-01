@@ -1,5 +1,6 @@
 import React from "react";
-// import { FormattedMessage } from 'react-intl';
+import TickIcon from "../../../assets/icons/acc-den-tick.svg";
+import TrashIcon from "../../../assets/icons/trash.svg";
 
 const UserDashboard = () => {
 	return (
@@ -25,7 +26,24 @@ const UserDashboard = () => {
 						<td>Admin</td>
 						<td>Oui</td>
 						<td>
-							<button className="btn btn-info">test</button>
+							<a href="#">
+								<img
+									src={TrashIcon}
+									alt="Delete a user"
+									width="25"
+									height="25"
+								/>
+							</a>
+						</td>
+						<td>
+							<a href="#">
+								<img
+									src={TickIcon}
+									alt="Accept or refuse user"
+									width="25"
+									height="25"
+								/>
+							</a>
 						</td>
 					</tr>
 				</tbody>

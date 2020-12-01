@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-// import { FormattedMessage } from 'react-intl';
 import UserDashboard from "../components/Admin/UserDashboard";
-import LessonsDashboard from "../components/Admin/LessonsDashboard";
+import FormationsDashboard from "../components/Admin/FormationsDashboard";
 import RoomDashboard from "../components/Admin/RoomDashboard";
 import CategoryDashboard from "../components/Admin/CategoryDashboard";
 import SessionDashboard from "../components/Admin/SessionDashboard";
@@ -17,7 +16,7 @@ const Admin = () => {
 		if (dashboardStatus === "users") {
 			return <UserDashboard />;
 		} else if (dashboardStatus === "lessons") {
-			return <LessonsDashboard />;
+			return <FormationsDashboard />;
 		} else if (dashboardStatus === "rooms") {
 			return <RoomDashboard />;
 		} else if (dashboardStatus === "categories") {

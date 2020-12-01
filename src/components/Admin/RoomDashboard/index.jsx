@@ -1,5 +1,6 @@
 import React from "react";
-// import { FormattedMessage } from 'react-intl';
+import AddIcon from "../../../assets/icons/plus.svg";
+import EditIcon from "../../../assets/icons/edit.svg";
 
 const RoomDashboard = () => {
 	return (
@@ -8,29 +9,28 @@ const RoomDashboard = () => {
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						<th scope="col">Third</th>
-						<th scope="col">Last</th>
-						<th scope="col">Handle</th>
+						<th scope="col">id</th>
+						<th scope="col">Nom</th>
+						<th scope="col">Capacité</th>
+
+						<th scope="col">
+							<a href="#">
+								<img src={AddIcon} alt="Ajouter" width="25" height="25" />
+							</a>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<th scope="row">1</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Jacob</td>
-						<td>Thornton</td>
-						<td>@fat</td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>Larry</td>
-						<td>the Bird</td>
-						<td>@twitter</td>
+						<td>12 </td>
+						<td>420 Platane</td>
+						<td>30 personnes</td>
+						<td>
+							<a href="#">
+								<img src={EditIcon} alt="Éditer" width="25" height="25" />
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
