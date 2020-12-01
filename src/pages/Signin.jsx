@@ -19,6 +19,7 @@ const Login = () => {
 					</div>
 
 					<div className="col-lg-5 offset-lg-1 col-12 border-neumorphic bg-white p-4 d-flex flex-column justify-content-around border-rounded" style={{ height: "75vh" }}>
+						
 
 						<form action="">
 
