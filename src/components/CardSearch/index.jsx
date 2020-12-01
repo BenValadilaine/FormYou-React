@@ -8,7 +8,7 @@ const CardSearch = ({ }) => {
         <div className="card-search p-4">
 
 
-            <input type="text" className="form-control form-control-lg col-12 search-zone" />
+            <input type="text" id="formation-search-zone" className="form-control form-control-lg col-12 search-zone" />
 
 
             <h2 style={{ padding: "0.75rem" }} className="my-4">Categories</h2>
