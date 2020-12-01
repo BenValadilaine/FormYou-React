@@ -40,9 +40,9 @@ const Signup = () => {
 	}, [accountType])
 
 	return (
-		<div className="container d-flex flex-column justify-content-center" style={{ minHeight: "95vh" }}>
+		<div className="container d-flex flex-column align-items-center justify-content-center" style={{ minHeight: "95vh" }}>
 
-			<div className="row col-12 border-0 p-0 ">
+			<div className="row col-12 border-0 p-0">
 
 				<div className="col-6 p-0 d-none d-lg-block border-neumorphic border-rounded" style={{ height: "75vh" }}>
 
@@ -52,7 +52,7 @@ const Signup = () => {
 
 				</div>
 
-				<div className="col-lg-5 offset-lg-1 col-12 border-neumorphic bg-white p-4 d-flex flex-column justify-content-around border-rounded" style={{ height: "75vh" }}>
+				<div className="col-lg-5 offset-lg-1 col-12 border-neumorphic bg-white p-4 d-block overflow-auto border-rounded" style={{ height: "75vh", paddingTop:"5rem" }}>
 
 
 					{
