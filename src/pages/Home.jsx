@@ -4,19 +4,18 @@ import React from 'react';
 const Home = () => {
   return (
 
-    <div className="container-fluid m-auto" style={{ minHeight: "80vh" }}>
+    <div className="container-fluid m-auto d-flex justify-content-center align-items-center" style={{ minHeight: "95vh" }}>
 
 
-      <div className="row">
+      <div className="row m-4 m-lg-0" style={{ minHeight: "75vh" }}>
 
-        <div className="col-4">
-
+        <div className="col-4 bg-home d-none d-lg-block">
 
 
 
         </div>
 
-        <div className="col-8">
+        <div className="col-lg-8 col-12 bg-white p-4 d-flex flex-column justify-content-around border-rounded" style={{ minHeight: "50vh" }}>
 
 
 
@@ -27,8 +26,9 @@ const Home = () => {
 
           <h3>Des aides sont possibles, demander conseil à nos experts ...</h3>
 
-
-          <button className="btn btn-lg col-md-4 btn-white">Les formations</button>
+          <div>
+            <button className="btn btn-lg col-md-4 col-12 btn-scheme">Les formations</button>
+          </div>
 
         </div>
 
