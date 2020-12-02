@@ -6,10 +6,9 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-  const newState = deepCloneObject(initialState)
+  const newState = deepCloneObject(state)
   switch (action.type) {
     case "SET_CURRENT_USER":
-      Cookies.set("current_user", action.payload.current_user);
       return newState.current_user = action.payload.current_user;
     default:
       return newState;

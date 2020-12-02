@@ -18,16 +18,13 @@ import Admin from './pages/Admin';
 
 const App = () => {
 
-	const checkAuth = () => {
-		return false;
-	};
 
 	//Private routes who do not need authentification
 	const UnAuthRoute = ({ component: Component, ...rest }) => (
 		<Route
 			{...rest}
 			render={(props) =>
-				checkAuth() ? (
+				isUserSignIn() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
 						<Component {...props} />
@@ -41,7 +38,7 @@ const App = () => {
 		<Route
 			{...rest}
 			render={(props) =>
-				checkAuth() ? (
+				isUserSignIn() ? (
 					<Component {...props} />
 				) : (
 						<Redirect to={{ pathname: "/login" }} />
