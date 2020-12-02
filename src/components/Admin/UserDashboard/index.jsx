@@ -20,7 +20,7 @@ const UserDashboard = () => {
 
 	useEffect(() => {
 		handleUsers();
-	}, [])
+	}, [show])
 
 	const handleUsers = async () => {
 	
@@ -45,12 +45,24 @@ const UserDashboard = () => {
 
 		handleClose()
 	}
- 	 /*
-	async update(datas, endpoint, authenticated = true, jwt_token = null) {
-        this.endpoint = this.base_url + endpoint;
-        let response = await this.request("PUT", datas, authenticated, jwt_token)
-        return response;
+
+	const deleteUser = async (user) => {
+	
+		//request to DELETE /users
+		const response = await API_REQUEST.delete(
+			`/users/${user.id}`,
+			true,
+			Cookies.get("jwt_token")
+			);
+
+		handleUsers()
 	}
+ 	 /*
+    async delete(endpoint, authenticated = true, jwt_token = null) {
+        this.endpoint = this.base_url + endpoint;
+        let response = await this.request("DELETE", null, authenticated, jwt_token)
+        return response;
+    }
 	*/
 	return (
 		<div>
@@ -73,10 +85,40 @@ const UserDashboard = () => {
 							<th scope="row">{user.id}</th>
 							<td>{user.first_name}</td>
 							<td>{user.last_name}</td>
-							<td>{user.age}</td>
+							<td>
+							{
+								user.age
+							}
+							{
+								!user.age &&
+									"Non renseigné"
+							}
+							</td>
 							<td>{user.email}</td>
-							<td>{user.role}</td>
-							<td>{user.is_validated}</td>
+							<td>
+							{
+								user.role_id === 1 &&
+								"Student"
+							}
+							{
+								user.role_id === 2 &&
+								"Admin"
+							}
+							{
+								user.role_id === 3 &&
+								"Teacher"
+							}
+							</td>
+							<td>
+							{
+								user.is_validated &&
+								  	"Oui"
+							}
+							{
+								!user.is_validated &&
+									"Non"
+							}
+							</td>
 							<td>
 								<a href="#">
 									<img
@@ -84,6 +126,7 @@ const UserDashboard = () => {
 										alt="Delete a user"
 										width="25"
 										height="25"
+										onClick={() => deleteUser(user)}
 									/>
 								</a>
 							</td>
