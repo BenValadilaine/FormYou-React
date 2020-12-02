@@ -3,15 +3,20 @@ import { Modal, Button } from "react-bootstrap";
 import TickIcon from "../../../assets/icons/acc-den-tick.svg";
 import TrashIcon from "../../../assets/icons/trash.svg";
 import API_REQUEST from '../../../services/ApiRequest/ApiRequest';
+import Cookies from "js-cookie";
 
 const UserDashboard = () => {
 	
 	//STATES
 	const [show, setShow] = useState(false);
 	const [users, setUsers] = useState([]);
+	const [userSelected, setUserSelected] = useState({});
 
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleShow = (user) => {
+		setUserSelected(user)
+		setShow(true);
+	}
 
 	useEffect(() => {
 		handleUsers();
@@ -24,6 +29,31 @@ const UserDashboard = () => {
 		setUsers(response);
 	}
 
+	const editUserStatus = async (status) => {
+
+		//request to PUT /users
+		const response = await API_REQUEST.update(
+			{
+				user: {
+					is_validated: status
+				}
+			},
+			`/users/${userSelected.id}`,
+			true,
+			Cookies.get("jwt_token")
+			);
+		
+		console.log(response)
+
+		handleClose()
+	}
+ 	 /*
+	async update(datas, endpoint, authenticated = true, jwt_token = null) {
+        this.endpoint = this.base_url + endpoint;
+        let response = await this.request("PUT", datas, authenticated, jwt_token)
+        return response;
+	}
+	*/
 	return (
 		<div>
 			<table className="table">
@@ -66,7 +96,7 @@ const UserDashboard = () => {
 										alt="Accept or refuse user"
 										width="25"
 										height="25"
-										onClick={handleShow}
+										onClick={() => handleShow(user)}
 									/>
 								</a>
 							</td>
@@ -77,14 +107,14 @@ const UserDashboard = () => {
 
 				<Modal show={show} onHide={handleClose}>
 					<Modal.Header closeButton>
-					<Modal.Title>Nom</Modal.Title>
+					<Modal.Title>{`${userSelected.first_name} ${userSelected.last_name}`}</Modal.Title>
 					</Modal.Header>
-					<Modal.Body>Valider ou refuser cet utilisateur</Modal.Body>
+					<Modal.Body>Mettre à jour le statut de cet utilisateur</Modal.Body>
 					<Modal.Footer>
-					<Button variant="success" onClick={handleClose}>
+					<Button variant="success" onClick={() => editUserStatus(true)}>
 						Valider
 					</Button>
-					<Button variant="danger" onClick={handleClose}>
+					<Button variant="danger" onClick={() => editUserStatus(false)}>
 						Refuser
 					</Button>
 					</Modal.Footer>
