@@ -42,8 +42,6 @@ const UserDashboard = () => {
 			true,
 			Cookies.get("jwt_token")
 			);
-		
-		console.log(response)
 
 		handleClose()
 	}
