@@ -1,19 +1,18 @@
-/* ==== EXAMPLE ====
-const my_reducer = (state='value', action) => {
-  switch(action.type){
-    case "ACTION" :
-      return state + 1;
-    case "ANOTHERACTION" :
-      return state + action.playload;
+import deepCloneObject from "../../helpers/deepClone";
+import Cookies from "js-cookie"
+
+const initialState = {
+  current_user: {}
+}
+
+const reducer = (state = initialState, action) => {
+  const newState = deepCloneObject(state)
+  switch (action.type) {
+    case "SET_CURRENT_USER":
+      return newState.current_user = action.payload.current_user;
     default:
-      return state;
+      return newState;
   }
 }
 
-export default my_reducer;
-
-==== TO USE IT FROM ANOTHER COMPONENT ====
-import {useSelector} from 'react-redux';
-
-const my_reducer = useSelector(state => state.my_reducer);
-*/
+export default reducer;
