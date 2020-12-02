@@ -23,7 +23,7 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
     useEffect(() => {
 
 
-        // BIG CALENDAR
+        // BIG CALENDAR DATA FORMAT
 
         // {
         //     title: "test",
@@ -32,9 +32,9 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
         //     allDay: true
         // }
 
-        // API
+        // API DATA FORMAT
 
-        //         capacity: 20
+        // capacity: 20
         // created_at: "2020-12-02T08:54:20.379Z"
         // end_date: "2020-12-03T08:54:20.360Z"
         // formation_id: 2
@@ -47,7 +47,6 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
             const response = await API_REQUEST.find(API_ENDPOINTS["formations"] + `/${formation_id}/formation_sessions`);
 
             const formation_sessions = response.map(({ start_date, end_date, room_id }) => {
-
                 return {
 
                     title: formation.title,
@@ -57,11 +56,7 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
                 }
             });
 
-
-
             setFormationsSessions(formation_sessions);
-
-
         }
 
         fetchFormationSessions()

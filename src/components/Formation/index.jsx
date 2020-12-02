@@ -5,15 +5,17 @@ import { capitalize } from "../../helpers/string";
 
 const Formation = ({ id, title, description, created_at, updated_at }) => {
 
+    // hooks to access browser history api using react router dom
     const history = useHistory()
-    const redirect = (id) => {
 
-        history.push(`/formation/${id}`)
-
+    // helper to for redirection redirect
+    const redirect = (url) => {
+        history.push(url)
 
     }
+
     return (
-        <div className="card p-4 border-rounded" onClick={() => redirect(id)} id={id}>
+        <div className="card p-4 border-rounded" onClick={() => redirect(`/formation/${id}`)} id={id}>
 
 
             <div className="row">
