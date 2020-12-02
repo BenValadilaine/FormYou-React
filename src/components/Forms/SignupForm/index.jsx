@@ -6,7 +6,7 @@ import API_REQUEST from '../../../services/ApiRequest/ApiRequest';
 import { API_ENDPOINTS } from "../../../services/ApiRequest/config/config.js";
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from "../../../redux/actions";
-
+import Cookies from "js-cookie";
 
 
 const SignupForm = () => {
@@ -17,7 +17,7 @@ const SignupForm = () => {
 	const [roles, setRoles] = useState([])
 
 	const dispatch = useDispatch();
-	const dispatchSetCurrentUser = () => dispatch((current_user) => setCurrentUser(current_user))
+	//const dispatchSetCurrentUser = () => dispatch((current_user) => setCurrentUser(current_user))
 
 	const handleClick = (event) => {
 		event.preventDefault();
@@ -52,31 +52,34 @@ const SignupForm = () => {
 
 		let { firstname, lastname, email, password, password_confirmation, accountType: { id } } = userDatas
 
-		let user = {
+		const response = await API_REQUEST.signUp(
+			{
 
-			user: {
-				first_name: firstname,
-				last_name: lastname,
-				email: email,
-				password: password,
-				password_confirmation: password_confirmation,
-				role_id: accountType
+				user: {
+					first_name: firstname,
+					last_name: lastname,
+					email: email,
+					password: password,
+					password_confirmation: password_confirmation,
+					role_id: accountType
+				}
 			}
-		};
-
-		let response = await API_REQUEST.signUp(
-			user
 			, API_ENDPOINTS["signup"]);
 
-		let jwt = response.headers.get("Authorization");
+		const jwt = response.headers.get("Authorization");
 
-		user = response.json();
+		Cookies.set("jwt_token", jwt)
 
-		let current_user = {
-			current_user: { ...user, jwt_token: jwt }
+		const current_user = await response.json().data;
+
+		const payload = {
+			current_user
 		}
 
-		dispatchSetCurrentUser(current_user);
+		dispatch({
+			type: "SET_CURRENT_USER",
+			payload
+		});
 
 	}
 
