@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import "./index.scss";
 
 const Navbar = () => {
@@ -23,7 +22,7 @@ const Navbar = () => {
 			<div className="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul className="navbar-nav ml-auto mr-auto">
 					<li className="nav-item">
-						<Link to="/lessons" className="nav-link">
+						<Link to="/formations" className="nav-link">
 							Les formations
 						</Link>
 					</li>
@@ -55,7 +54,7 @@ const Navbar = () => {
 					{
 						// toogle on if connected
 						<li className="nav-item">
-							<Link to="/profil" className="nav-link">
+							<Link to="/profile" className="nav-link">
 								Mon Profil
 							</Link>
 						</li>
