@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from 'moment'
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
+import modalContext from "../../context/modalContext";
 const localizer = momentLocalizer(moment)
 
 
@@ -17,6 +18,9 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
     // any resource the event may be a related too
 
     const [formationsSessions, setFormationsSessions] = useState([]);
+
+
+    const {isModalOpen, setModalIsOpen} =  useContext(modalContext);
 
 
 
@@ -72,6 +76,7 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
                 startAccessor="start"
                 endAccessor="end"
                 style={{ height: 500 }}
+                onSelectEvent={(event)=>{setModalIsOpen(!isModalOpen)}}
             />
         </div>
     )
