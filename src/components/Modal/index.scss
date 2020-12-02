@@ -1,0 +1,21 @@
+#modal {
+    position: fixed;
+    z-index: 5000;
+}
+
+@media screen and (min-width: 768px) {
+    #modal {
+        height: 75vh;
+        top: 50%;
+        bottom: 50%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #modal {
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+}

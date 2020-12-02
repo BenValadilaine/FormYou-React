@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./assets/scss/main.scss";
 import {
 	BrowserRouter as Router,
@@ -15,9 +15,14 @@ import FormationsPage from "./pages/Formations";
 import FormationPage from "./pages/Formation";
 import Admin from './pages/Admin';
 import isUserSignIn from './helpers/signActions';
+import modalContext from "./context/modalContext";
+import Modal from './components/Modal/index';
 
 
 const App = () => {
+
+	const [isModalOpen, setModalIsOpen] = useState(false);
+	const [modalContent, setModalContent] = useState("default")
 
 
 	//Private routes who do not need authentification
@@ -49,28 +54,31 @@ const App = () => {
 	);
 
 	return (
-		<div className="App">
-			<Router>
-				<Navbar />
-				<section className="page">
-					<Switch>
-						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route exact path="/formations">
-							<FormationsPage />
-						</Route>
-						<Route exact path="/formation/:id">
-							<FormationPage />
-						</Route>
-						<UnAuthRoute path="/signin" component={SigninPage} />
-						<UnAuthRoute path="/signup" component={SignupPage} />
-						<UnAuthRoute path="/profile" component={Profile} />
-						<AuthRoute path="/admin" component={Admin} />
-					</Switch>
-				</section>
-			</Router>
-		</div>
+		<modalContext.Provider value={{ isModalOpen, setModalIsOpen, modalContent, setModalContent }}>
+			<div className="App">
+				<Router>
+					<Navbar />
+					<section className="page">
+						<Switch>
+							<Route exact path="/">
+								<Home />
+							</Route>
+							<Route exact path="/formations">
+								<FormationsPage />
+							</Route>
+							<Route exact path="/formation/:id">
+								<FormationPage />
+							</Route>
+							<UnAuthRoute path="/signin" component={SigninPage} />
+							<UnAuthRoute path="/signup" component={SignupPage} />
+							<UnAuthRoute path="/profile" component={Profile} />
+							<UnAuthRoute path="/admin" component={Admin} />
+						</Switch>
+					</section>
+				</Router>
+			</div>
+			<Modal/>
+		</modalContext.Provider>
 	);
 };
 
