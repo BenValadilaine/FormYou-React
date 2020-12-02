@@ -57,6 +57,7 @@ class ApiRequest {
     // WRAPPER FIND METHOD
     async find(endpoint, authenticated = true, jwt_token = null) {
         this.endpoint = this.base_url + endpoint;
+        console.log(this.endpoint);
         let response = await this.request("GET", null, authenticated, jwt_token)
         return response.json();
     }

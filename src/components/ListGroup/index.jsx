@@ -17,8 +17,6 @@ const ListGroup = ({ categories, searchFilters }) => {
 
     }
 
-
-
     useEffect(() => {
 
         searchFilters(activeFilters);

@@ -104,11 +104,15 @@ const SignupForm = () => {
 
 
 	// loading roles at first load of app page
-	useEffect(async () => {
+	useEffect(() => {
 
-		const roles = await API_REQUEST.find(API_ENDPOINTS["roles"], false, null);
+		const fetchRoles = async () => {
+			const roles = await API_REQUEST.find(API_ENDPOINTS["roles"], false, null);
 
-		setRoles(roles);
+			setRoles(roles);
+		}
+		
+		fetchRoles();
 
 	}, [])
 
