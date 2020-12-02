@@ -15,7 +15,7 @@ const Home = () => {
 
         </div>
 
-        <div className="col-lg-8 col-12 bg-white p-4 d-flex flex-column justify-content-around border-rounded" style={{ minHeight: "50vh" }}>
+        <div className="col-lg-8 col-12 bg-white d-flex flex-column justify-content-around border-rounded" style={{ minHeight: "50vh", padding:"5.5rem" }}>
 
 
 

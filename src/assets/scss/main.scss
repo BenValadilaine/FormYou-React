@@ -139,3 +139,17 @@ body {
     background-repeat: no-repeat;
     padding-left: 2.5rem;
 }
+
+.form-control{
+    border:none;
+    border-bottom: 1px solid #b1b1b1;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #f4f4f4;
+    border-color:unset; 
+    outline: 0;
+    box-shadow: unset;
+    border-bottom: 1px solid #515151;
+}
