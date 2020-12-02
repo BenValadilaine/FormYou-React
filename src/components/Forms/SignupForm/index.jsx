@@ -79,29 +79,23 @@ const SignupForm = () => {
 		// accessing jwt token
 		const jwt = response.headers.get("Authorization");
 
-
 		// accessing data of response 
 		const current_user = await response.json().data;
 
-		if (jwt && current_user) {
-			// set cookies jwt_token
-			Cookies.set("jwt_token", jwt)
+		Cookies.set("jwt_token", jwt)
 
-			// constructing payload
-			const payload = {
-				current_user
-			}
-
-			// dispatching action to redux store
-			dispatch({
-				type: "SET_CURRENT_USER",
-				payload
-			});
-
-			history.push("/home")
-
-
+		// constructing payload
+		const payload = {
+			current_user
 		}
+
+		// dispatching action to redux store
+		dispatch({
+			type: "SET_CURRENT_USER",
+			payload
+		});
+
+		history.push("/")
 
 
 	}
