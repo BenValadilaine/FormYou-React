@@ -13,17 +13,20 @@ const FormationsPage = () => {
 
     const [searchFilters, setSearchFilters] = useState([])
 
+    const fetchAndSetFormations = async () => {
+        const formation_datas = await API_REQUEST.find(API_ENDPOINTS["formations"]);
+        setFormations(formation_datas);
+    }
+
     useEffect(async () => {
 
-        const formation_datas = await API_REQUEST.find(API_ENDPOINTS["formations"]);
-
+        fetchAndSetFormations()
         const categories_datas = await API_REQUEST.find(API_ENDPOINTS["categories"])
-
-        setFormations(formation_datas);
-
         setCategories(categories_datas);
 
     }, []);
+
+
 
     useEffect(async () => {
 
@@ -33,7 +36,9 @@ const FormationsPage = () => {
 
         const final_results = [];
         results.map((formationList) => formationList.map((formation) => final_results.push(formation)));
-        setFormations(final_results);
+
+        final_results.length > 0 ? setFormations(final_results) : fetchAndSetFormations();
+
 
     }, [searchFilters])
 
