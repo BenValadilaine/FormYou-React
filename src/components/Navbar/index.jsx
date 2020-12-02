@@ -71,7 +71,7 @@ const Navbar = () => {
 					{
 						// toogle on if connected / make of it an "onclick" button that targets a logout function
 						<li className="nav-item">
-							<a href="#" onCLick={() => handleSignOut()} className="nav-link">
+							<a href="#" onClick={() => handleSignOut()} className="nav-link">
 								Se déconnecter
 							</a>
 						</li>
