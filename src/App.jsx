@@ -11,25 +11,12 @@ import Home from "./pages/Home";
 import SigninPage from "./pages/Signin";
 import SignupPage from "./pages/Signup";
 import Profile from "./pages/Profile";
-import Admin from "./pages/Admin";
-import FormationPage from "./pages/Formations";
+import FormationsPage from "./pages/Formations";
+import FormationPage from "./pages/Formation";
+import Admin from './pages/Admin';
 
-/* ===== INTL ========
-import { IntlProvider } from 'react-intl';
-import textFr from './translation/fr';
-import textEn from './translation/en';
-import FormationPage from './pages/Formations';
-
-const text = {
-  fr: textFr,
-  en: textEn,
-}
-*/
 
 const App = () => {
-	/* === INTL ===
-  const [language, setLanguage] = useState('fr');
-  */
 
 	const checkAuth = () => {
 		return false;
@@ -43,8 +30,8 @@ const App = () => {
 				checkAuth() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
-					<Component {...props} />
-				)
+						<Component {...props} />
+					)
 			}
 		/>
 	);
@@ -57,14 +44,13 @@ const App = () => {
 				checkAuth() ? (
 					<Component {...props} />
 				) : (
-					<Redirect to={{ pathname: "/signin" }} />
-				)
+						<Redirect to={{ pathname: "/login" }} />
+					)
 			}
 		/>
 	);
 
 	return (
-		// <IntlProvider locale={language} messages={text[language]}>
 		<div className="App">
 			<Router>
 				<Navbar />
@@ -74,17 +60,20 @@ const App = () => {
 							<Home />
 						</Route>
 						<Route exact path="/formations">
+							<FormationsPage />
+						</Route>
+						<Route exact path="/formation/:id">
 							<FormationPage />
 						</Route>
 						<UnAuthRoute path="/signin" component={SigninPage} />
 						<UnAuthRoute path="/signup" component={SignupPage} />
+						<Profile />
 						<AuthRoute path="/profile" component={Profile} />
 						<UnAuthRoute path="/admin" component={Admin} />
 					</Switch>
 				</section>
 			</Router>
 		</div>
-		// </ IntlProvider>
 	);
 };
 

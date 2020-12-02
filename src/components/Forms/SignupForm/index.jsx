@@ -43,17 +43,17 @@ const SignupForm = () => {
 	return (
 		<div className="container d-flex flex-column align-items-center justify-content-center" style={{ minHeight: "95vh" }}>
 
-			<div className="row col-12 border-0 p-0">
+			<div className="row col-12 border-0 p-0  border-neumorphic">
 
-				<div className="col-6 p-0 d-none d-lg-block border-neumorphic border-rounded" style={{ height: "75vh" }}>
+				<div className="col-6 p-0 d-none d-lg-block border-neumorphic" style={{ height: "75vh" }}>
 
 
-					<img src={signupImage} alt="signin image" className="h-100 w-100 border-rounded m-0 p-0" />
+					<img src={signupImage} alt="signin image" className="h-100 w-100 m-0 p-0" />
 
 
 				</div>
 
-				<div className="col-lg-5 offset-lg-1 col-12 border-neumorphic bg-white px-4 d-block overflow-auto border-rounded" style={{ height: "75vh", paddingTop: "5rem" }}>
+				<div className="col-lg-6 col-12 bg-white px-4 d-block overflow-auto" style={{ height: "75vh", paddingTop: "5rem" }}>
 
 
 					{
@@ -94,11 +94,11 @@ const SignupForm = () => {
 								<>
 
 
-									<FormGroup label="Prenom:" inputName="firstname" inputId="firstname" inputType="text" />
+									<FormGroup label="Prenom:" inputName="firstname" inputId="firstname" inputType="text" placeholder="John" />
 
-									<FormGroup label="Nom:" inputName="lastname" inputId="lastname" inputType="text" />
+									<FormGroup label="Nom:" inputName="lastname" inputId="lastname" inputType="text" placeholder="Doe" />
 
-									<FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" />
+									<FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" placeholder="email@example.com" />
 									<FormGroup label="Mot de passe:" inputName="password" inputId="password" inputType="password" />
 									<FormGroup label="Confirmer le mot de passe:" inputName="password_confirmation" inputId="password_confirmation" inputType="password" />
 
