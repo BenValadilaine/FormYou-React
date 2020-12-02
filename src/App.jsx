@@ -13,22 +13,10 @@ import SignupPage from "./pages/Signup";
 import Profile from "./pages/Profile";
 import FormationsPage from "./pages/Formations";
 import FormationPage from "./pages/Formation";
-/* ===== INTL ========
-import { IntlProvider } from 'react-intl';
-import textFr from './translation/fr';
-import textEn from './translation/en';
-import FormationPage from './pages/Formations';
+import Admin from './pages/Admin';
 
-const text = {
-  fr: textFr,
-  en: textEn,
-}
-*/
 
 const App = () => {
-	/* === INTL ===
-  const [language, setLanguage] = useState('fr');
-  */
 
 	const checkAuth = () => {
 		return false;
@@ -63,7 +51,6 @@ const App = () => {
 	);
 
 	return (
-		// <IntlProvider locale={language} messages={text[language]}>
 		<div className="App">
 			<Router>
 				<Navbar />
@@ -87,7 +74,6 @@ const App = () => {
 				</section>
 			</Router>
 		</div>
-		// </ IntlProvider>
 	);
 };
 
