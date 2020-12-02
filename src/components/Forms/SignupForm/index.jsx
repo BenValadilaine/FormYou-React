@@ -22,7 +22,6 @@ const SignupForm = () => {
 	const dispatch = useDispatch();
 
 	// importing history form react router dom
-
 	const history = useHistory();
 
 	// analysing submit form
@@ -64,7 +63,6 @@ const SignupForm = () => {
 		// request to /signup token
 		const response = await API_REQUEST.signUp(
 			{
-
 				user: {
 					first_name: firstname,
 					last_name: lastname,
@@ -78,11 +76,10 @@ const SignupForm = () => {
 
 		// accessing jwt token
 		const jwt = response.headers.get("Authorization");
-
-		// accessing data of response 
-		const current_user = await response.json().data;
-
 		Cookies.set("jwt_token", jwt)
+
+		// accessing data of response
+		const current_user = await response.json().data;
 
 		// constructing payload
 		const payload = {
@@ -95,9 +92,7 @@ const SignupForm = () => {
 			payload
 		});
 
-		history.push("/")
-
-
+		history.push("/profile")
 	}
 
 	// setting accountype
