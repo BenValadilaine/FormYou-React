@@ -1,7 +1,11 @@
-import { Cookies } from 'js-cookie';
+import Cookies from 'js-cookie';
 
 const isUserSignIn = () => {
-    return Cookies.get("current_user") != undefined;
+    if (Cookies.get("jwt_token")) {
+        return true;
+    } else {
+        return false
+    }
 }
 
 export default isUserSignIn;
