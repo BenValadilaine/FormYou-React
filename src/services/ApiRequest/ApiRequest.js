@@ -9,7 +9,7 @@ class ApiRequest {
         this.endpoint = endpoint;
     }
     // request method for all requests
-    async request(method, body = null, authenticated = false, jwt_token = null, headers = { "Content-Type": "application/json" }, authHeaders = { 'Authorization': `Bearer ${jwt_token}` }) {
+    async request(method, body = null, authenticated = false, jwt_token = null, headers = { "Content-Type": "application/json" }, authHeaders = { 'Authorization': `${jwt_token}` }) {
 
         // adding headers to fetch
         headers = authenticated && jwt_token ? { ...headers, ...authHeaders } : headers;

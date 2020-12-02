@@ -7,18 +7,25 @@ import { API_ENDPOINTS } from "../../../services/ApiRequest/config/config.js";
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from "../../../redux/actions";
 import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 
 
 const SignupForm = () => {
 
+	// STATES
 	const [currentStep, setCurrentStep] = useState(1);
 	const [accountType, setAccountType] = useState("student");
 	const [userDatas, setUserDatas] = useState({});
 	const [roles, setRoles] = useState([])
 
+	// importing dipatch actions
 	const dispatch = useDispatch();
-	//const dispatchSetCurrentUser = () => dispatch((current_user) => setCurrentUser(current_user))
 
+	// importing history form react router dom
+
+	const history = useHistory();
+
+	// analysing submit form
 	const handleClick = (event) => {
 		event.preventDefault();
 
@@ -36,6 +43,7 @@ const SignupForm = () => {
 		}
 	}
 
+	// listening for account choice by user
 	const handleAccountChoice = (value) => {
 
 		Array.from(document.querySelectorAll(".checkbox-card")).map((e) => e.classList.remove('selected'));
@@ -47,11 +55,13 @@ const SignupForm = () => {
 
 	const handleRegistration = async (event) => {
 
-
+		// preventing default http behaviour
 		event.preventDefault();
 
+		// destructuring object userDatas state containing user registration infos
 		let { firstname, lastname, email, password, password_confirmation, accountType: { id } } = userDatas
 
+		// request to /signup token
 		const response = await API_REQUEST.signUp(
 			{
 
@@ -66,23 +76,31 @@ const SignupForm = () => {
 			}
 			, API_ENDPOINTS["signup"]);
 
+		// accessing jwt token
 		const jwt = response.headers.get("Authorization");
+
+		// accessing data of response 
+		const current_user = await response.json().data;
 
 		Cookies.set("jwt_token", jwt)
 
-		const current_user = await response.json().data;
-
+		// constructing payload
 		const payload = {
 			current_user
 		}
 
+		// dispatching action to redux store
 		dispatch({
 			type: "SET_CURRENT_USER",
 			payload
 		});
 
+		history.push("/")
+
+
 	}
 
+	// setting accountype
 	useEffect(() => {
 
 		setUserDatas({ ...userDatas, accountType: accountType });
@@ -90,6 +108,7 @@ const SignupForm = () => {
 	}, [accountType])
 
 
+	// loading roles at first load of app page
 	useEffect(async () => {
 
 		const roles = await API_REQUEST.find(API_ENDPOINTS["roles"], false, null);
