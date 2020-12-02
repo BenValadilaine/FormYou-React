@@ -14,20 +14,18 @@ import Profile from "./pages/Profile";
 import FormationsPage from "./pages/Formations";
 import FormationPage from "./pages/Formation";
 import Admin from './pages/Admin';
+import isUserSignIn from './helpers/signActions';
 
 
 const App = () => {
 
-	const checkAuth = () => {
-		return false;
-	};
 
 	//Private routes who do not need authentification
 	const UnAuthRoute = ({ component: Component, ...rest }) => (
 		<Route
 			{...rest}
 			render={(props) =>
-				checkAuth() ? (
+				isUserSignIn() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
 						<Component {...props} />
@@ -41,7 +39,7 @@ const App = () => {
 		<Route
 			{...rest}
 			render={(props) =>
-				checkAuth() ? (
+				isUserSignIn() ? (
 					<Component {...props} />
 				) : (
 						<Redirect to={{ pathname: "/login" }} />

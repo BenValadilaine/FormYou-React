@@ -3,17 +3,29 @@ import signupImage from "../../../assets/img/signup.jpg";
 import CheckBoxCard from '../../CheckoxCard/index';
 import FormGroup from '../../FormGroup/index';
 import API_REQUEST from '../../../services/ApiRequest/ApiRequest';
-import { API_ENDPOINTS} from "../../../services/ApiRequest/config/config";
-
+import { API_ENDPOINTS } from "../../../services/ApiRequest/config/config.js";
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from "../../../redux/actions";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 
 
 const SignupForm = () => {
 
+	// STATES
 	const [currentStep, setCurrentStep] = useState(1);
 	const [accountType, setAccountType] = useState("student");
 	const [userDatas, setUserDatas] = useState({});
 	const [roles, setRoles] = useState([])
 
+	// importing dipatch actions
+	const dispatch = useDispatch();
+
+	// importing history form react router dom
+
+	const history = useHistory();
+
+	// analysing submit form
 	const handleClick = (event) => {
 		event.preventDefault();
 
@@ -24,25 +36,71 @@ const SignupForm = () => {
 			let password = document.querySelector("#password").value;
 			let password_confirmation = document.querySelector("#password_confirmation").value;
 
-			setUserDatas({ ...userDatas, firstanme: firstname, lastname: lastname, email: email, password: password, password_confirmation: password_confirmation })
+			setUserDatas({ ...userDatas, firstname: firstname, lastname: lastname, email: email, password: password, password_confirmation: password_confirmation })
 			setCurrentStep(2);
 		} else {
 			setCurrentStep(1);
 		}
 	}
 
+	// listening for account choice by user
 	const handleAccountChoice = (value) => {
-		setAccountType(value)
+
 		Array.from(document.querySelectorAll(".checkbox-card")).map((e) => e.classList.remove('selected'));
-
 		document.querySelector(`#${value}`).classList.add('selected');
+
+		value = value.split("-")[1];
+		setAccountType(value)
 	}
 
-	const  handleRegistration = (event) =>
-	{
+	const handleRegistration = async (event) => {
+
+		// preventing default http behaviour
 		event.preventDefault();
+
+		// destructuring object userDatas state containing user registration infos
+		let { firstname, lastname, email, password, password_confirmation, accountType: { id } } = userDatas
+
+		// request to /signup token
+		const response = await API_REQUEST.signUp(
+			{
+
+				user: {
+					first_name: firstname,
+					last_name: lastname,
+					email: email,
+					password: password,
+					password_confirmation: password_confirmation,
+					role_id: accountType
+				}
+			}
+			, API_ENDPOINTS["signup"]);
+
+		// accessing jwt token
+		const jwt = response.headers.get("Authorization");
+
+		// accessing data of response 
+		const current_user = await response.json().data;
+
+		Cookies.set("jwt_token", jwt)
+
+		// constructing payload
+		const payload = {
+			current_user
+		}
+
+		// dispatching action to redux store
+		dispatch({
+			type: "SET_CURRENT_USER",
+			payload
+		});
+
+		history.push("/")
+
+
 	}
 
+	// setting accountype
 	useEffect(() => {
 
 		setUserDatas({ ...userDatas, accountType: accountType });
@@ -50,12 +108,13 @@ const SignupForm = () => {
 	}, [accountType])
 
 
-	useEffect(async ()=>{
+	// loading roles at first load of app page
+	useEffect(async () => {
 
 		const roles = await API_REQUEST.find(API_ENDPOINTS["roles"], false, null);
 
 		setRoles(roles);
-		
+
 	}, [])
 
 	return (
@@ -132,12 +191,12 @@ const SignupForm = () => {
 									<>
 
 										{
-											roles.map((role)=>{
-												let {id, name } = role;
-												<CheckBoxCard handleAccountChoice={(value) => handleAccountChoice(value)} id={id} label={name.toUpperCase()} />
+											roles.map((role) => {
+												let { id, name } = role;
+												return <CheckBoxCard key={id} handleAccountChoice={(value) => handleAccountChoice(value)} id={`${name}-${id}`} label={name.toUpperCase()} />
 											})
 										}
-					
+
 
 										<button className="btn btn-scheme-2 btn-lg col-12 my-4" type="submit" onClick={(event) => handleRegistration(event)}>VALIDER</button>
 
