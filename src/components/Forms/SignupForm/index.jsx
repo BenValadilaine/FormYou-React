@@ -7,6 +7,7 @@ import { API_ENDPOINTS } from "../../../services/ApiRequest/config/config.js";
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from "../../../redux/actions";
 import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 
 
 const SignupForm = () => {
@@ -19,6 +20,10 @@ const SignupForm = () => {
 
 	// importing dipatch actions
 	const dispatch = useDispatch();
+
+	// importing history form react router dom
+
+	const history = useHistory();
 
 	// analysing submit form
 	const handleClick = (event) => {
@@ -74,22 +79,30 @@ const SignupForm = () => {
 		// accessing jwt token
 		const jwt = response.headers.get("Authorization");
 
-		// set cookies jwt_token
-		Cookies.set("jwt_token", jwt)
 
 		// accessing data of response 
 		const current_user = await response.json().data;
 
-		// constructing payload
-		const payload = {
-			current_user
+		if (jwt && current_user) {
+			// set cookies jwt_token
+			Cookies.set("jwt_token", jwt)
+
+			// constructing payload
+			const payload = {
+				current_user
+			}
+
+			// dispatching action to redux store
+			dispatch({
+				type: "SET_CURRENT_USER",
+				payload
+			});
+
+			history.push("/home")
+
+
 		}
 
-		// dispatching action to redux store
-		dispatch({
-			type: "SET_CURRENT_USER",
-			payload
-		});
 
 	}
 
