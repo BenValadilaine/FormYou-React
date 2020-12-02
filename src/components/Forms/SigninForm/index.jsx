@@ -24,14 +24,13 @@ const SigninForm = () => {
           <form action="">
 
 
-            <h1>CONNEXION</h1>
-
+            <h1 className="my-5">CONNEXION</h1>
 
             <FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" />
             <FormGroup label="Mot de passe:" inputName="password" inputId="password" inputType="password" />
 
 
-            <button className="btn btn-scheme-2 btn-lg col-12" type="submit">VALIDER</button>
+            <button className="btn btn-scheme-2 btn-lg col-12 my-4" type="submit">VALIDER</button>
 
 
 
