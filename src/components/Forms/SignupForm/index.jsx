@@ -3,7 +3,9 @@ import signupImage from "../../../assets/img/signup.jpg";
 import CheckBoxCard from '../../CheckoxCard/index';
 import FormGroup from '../../FormGroup/index';
 import API_REQUEST from '../../../services/ApiRequest/ApiRequest';
-import { API_ENDPOINTS} from "../../../services/ApiRequest/config/config";
+import { API_ENDPOINTS } from "../../../services/ApiRequest/config/config.js";
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from "../../../redux/actions";
 
 
 
@@ -13,6 +15,9 @@ const SignupForm = () => {
 	const [accountType, setAccountType] = useState("student");
 	const [userDatas, setUserDatas] = useState({});
 	const [roles, setRoles] = useState([])
+
+	const dispatch = useDispatch();
+	const dispatchSetCurrentUser = () => dispatch((current_user) => setCurrentUser(current_user))
 
 	const handleClick = (event) => {
 		event.preventDefault();
@@ -24,7 +29,7 @@ const SignupForm = () => {
 			let password = document.querySelector("#password").value;
 			let password_confirmation = document.querySelector("#password_confirmation").value;
 
-			setUserDatas({ ...userDatas, firstanme: firstname, lastname: lastname, email: email, password: password, password_confirmation: password_confirmation })
+			setUserDatas({ ...userDatas, firstname: firstname, lastname: lastname, email: email, password: password, password_confirmation: password_confirmation })
 			setCurrentStep(2);
 		} else {
 			setCurrentStep(1);
@@ -32,15 +37,47 @@ const SignupForm = () => {
 	}
 
 	const handleAccountChoice = (value) => {
-		setAccountType(value)
-		Array.from(document.querySelectorAll(".checkbox-card")).map((e) => e.classList.remove('selected'));
 
+		Array.from(document.querySelectorAll(".checkbox-card")).map((e) => e.classList.remove('selected'));
 		document.querySelector(`#${value}`).classList.add('selected');
+
+		value = value.split("-")[1];
+		setAccountType(value)
 	}
 
-	const  handleRegistration = (event) =>
-	{
+	const handleRegistration = async (event) => {
+
+
 		event.preventDefault();
+
+		let { firstname, lastname, email, password, password_confirmation, accountType: { id } } = userDatas
+
+		let user = {
+
+			user: {
+				first_name: firstname,
+				last_name: lastname,
+				email: email,
+				password: password,
+				password_confirmation: password_confirmation,
+				role_id: accountType
+			}
+		};
+
+		let response = await API_REQUEST.signUp(
+			user
+			, API_ENDPOINTS["signup"]);
+
+		let jwt = response.headers.get("Authorization");
+
+		user = response.json();
+
+		let current_user = {
+			current_user: { ...user, jwt_token: jwt }
+		}
+
+		dispatchSetCurrentUser(current_user);
+
 	}
 
 	useEffect(() => {
@@ -50,12 +87,12 @@ const SignupForm = () => {
 	}, [accountType])
 
 
-	useEffect(async ()=>{
+	useEffect(async () => {
 
 		const roles = await API_REQUEST.find(API_ENDPOINTS["roles"], false, null);
 
 		setRoles(roles);
-		
+
 	}, [])
 
 	return (
@@ -132,12 +169,12 @@ const SignupForm = () => {
 									<>
 
 										{
-											roles.map((role)=>{
-												let {id, name } = role;
-												<CheckBoxCard handleAccountChoice={(value) => handleAccountChoice(value)} id={id} label={name.toUpperCase()} />
+											roles.map((role) => {
+												let { id, name } = role;
+												return <CheckBoxCard key={id} handleAccountChoice={(value) => handleAccountChoice(value)} id={`${name}-${id}`} label={name.toUpperCase()} />
 											})
 										}
-					
+
 
 										<button className="btn btn-scheme-2 btn-lg col-12 my-4" type="submit" onClick={(event) => handleRegistration(event)}>VALIDER</button>
 
