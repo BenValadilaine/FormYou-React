@@ -1,5 +1,6 @@
 import jwt_decode from "jwt-decode";
 import Cookies from 'js-cookie'
+import {API_BASE_URL } from "./config/config.js"
 
 class ApiRequest {
  
@@ -27,7 +28,7 @@ class ApiRequest {
  
         // executing call to api
         let api_response = await fetch(this.endpoint, options)
-        .then((response) => response.json())
+        .then((response) => response)
         .then((error) => error);
  
         // return api response
@@ -39,26 +40,27 @@ class ApiRequest {
     async create(datas, endpoint, authenticated = false, jwt_token = null) {
         this.endpoint = this.base_url + endpoint;
         let response = await this.request("POST", datas, authenticated, jwt_token)
-        return response;
+        return response.json();
     }
     // WRAPPER PUT UPDATE METHOD
     async update(datas, endpoint, authenticated = true, jwt_token = null) {
         this.endpoint = this.base_url + endpoint;
         let response = await this.request("PUT", datas, authenticated, jwt_token)
-        return response;
+        return response.json();
     }
     // WRAPPER DELETE METHOD
     async delete(endpoint, authenticated = true, jwt_token = null) {
         this.endpoint = this.base_url + endpoint;
         let response = await this.request("DELETE", null, authenticated, jwt_token)
-        return response;
+        return response.json();
     }
     // WRAPPER FIND METHOD
     async find(endpoint, authenticated = true, jwt_token = null) {
         this.endpoint = this.base_url + endpoint;
         let response = await this.request("GET", null, authenticated, jwt_token)
-        return response;
+        return response.json();
     }
+
  
     // userdatas as object {username, email, password}
     async signUp(datas, endpoint) {
@@ -82,3 +84,7 @@ class ApiRequest {
  
 
 }
+
+const API_REQUEST = new ApiRequest();
+
+export default API_REQUEST;

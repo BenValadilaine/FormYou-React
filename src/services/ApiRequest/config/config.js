@@ -1,11 +1,16 @@
 import jwt_decode from "jwt-decode";
 
 // API CONFIG
-const API_BASE_URL = "xxxx.herokuapp.com"
+const API_BASE_URL = "https://form-you-api.herokuapp.com/api"
 
 const API_ENDPOINTS = {
-    "users#index" : "/users"
+    "signup":"/signup",
+    "signin":"/login",
+    "signout":"/logout",
+    "formations":"/formations",
+    "roles":"/roles",
+    "categories":"/categories"
 }
 
 
-export {API_BASE_URL, API_ENDPOINTS}
+export { API_BASE_URL, API_ENDPOINTS }

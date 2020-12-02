@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import signupImage from "../../../assets/img/signup.jpg";
 import CheckBoxCard from '../../CheckoxCard/index';
 import FormGroup from '../../FormGroup/index';
+import API_REQUEST from '../../../services/ApiRequest/ApiRequest';
+import { API_ENDPOINTS} from "../../../services/ApiRequest/config/config";
+
 
 
 const SignupForm = () => {
@@ -9,6 +12,7 @@ const SignupForm = () => {
 	const [currentStep, setCurrentStep] = useState(1);
 	const [accountType, setAccountType] = useState("student");
 	const [userDatas, setUserDatas] = useState({});
+	const [roles, setRoles] = useState([])
 
 	const handleClick = (event) => {
 		event.preventDefault();
@@ -34,11 +38,25 @@ const SignupForm = () => {
 		document.querySelector(`#${value}`).classList.add('selected');
 	}
 
+	const  handleRegistration = (event) =>
+	{
+		event.preventDefault();
+	}
+
 	useEffect(() => {
 
 		setUserDatas({ ...userDatas, accountType: accountType });
 
 	}, [accountType])
+
+
+	useEffect(async ()=>{
+
+		const roles = await API_REQUEST.find(API_ENDPOINTS["roles"], false, null);
+
+		setRoles(roles);
+		
+	}, [])
 
 	return (
 		<div className="container d-flex flex-column align-items-center justify-content-center" style={{ minHeight: "95vh" }}>
@@ -113,12 +131,15 @@ const SignupForm = () => {
 								(
 									<>
 
-										<CheckBoxCard handleAccountChoice={(value) => handleAccountChoice(value)} id={"student"} label={"ETUDIANT"} />
+										{
+											roles.map((role)=>{
+												let {id, name } = role;
+												<CheckBoxCard handleAccountChoice={(value) => handleAccountChoice(value)} id={id} label={name.toUpperCase()} />
+											})
+										}
+					
 
-										<CheckBoxCard handleAccountChoice={(value) => handleAccountChoice(value)} id={"admin"} label={"ADMINISTRATEUR"} />
-
-										<CheckBoxCard handleAccountChoice={(value) => handleAccountChoice(value)} id={"teacher"} label={"FORMATEUR"} />
-
+										<button className="btn btn-scheme-2 btn-lg col-12 my-4" type="submit" onClick={(event) => handleRegistration(event)}>VALIDER</button>
 
 									</>
 
