@@ -17,7 +17,7 @@ const CardSearch = ({ }) => {
             <ListGroup />
 
 
-            <button className="col-12 btn btn-lg btn-scheme my-4">VALIDER</button>
+            <button className="col-12 btn btn-lg btn-scheme-2 my-4">VALIDER</button>
 
 
         </div>
