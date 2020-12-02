@@ -37,64 +37,18 @@ body {
 }
 
 .btn-scheme-2 {
-    color:#FFF;
-    background-color: #FF3E3E;
+    color: #fff;
+    background-color: #ff3e3e;
     border-radius: 25px;
 }
 
-.btn-scheme-2:hover{
-    color:#FFF;
+.btn-scheme-2:hover {
+    color: #fff;
     box-shadow: -1px 1px 2px rgba(102, 102, 102, 0.2), 1px -1px 2px rgba(102, 102, 102, 0.2),
-    -1px -1px 2px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(102, 102, 102, 0.9),
-    inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(102, 102, 102, 0.5);
+        -1px -1px 2px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(102, 102, 102, 0.9),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(102, 102, 102, 0.5);
 }
 
-
-.checkbox-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    p {
-        margin: 0;
-    }
-}
-
-.checkbox-card.selected {
-    border: 2px solid rgb(120, 224, 120);
-}
-
-#pevious-step {
-    position: absolute;
-    left: 1.5rem;
-    top: 1.5rem;
-}
-
-.checkbox {
-    opacity: 0;
-    height: 0;
-    width: 0;
-    padding: 0;
-    margin: 0;
-}
-
-
-.card {
-    background: #ffffff;
-    border: 1px solid #ffffff;
-    box-sizing: border-box;
-    box-shadow: -5px 5px 10px rgba(230, 230, 230, 0.2), 5px -5px 10px rgba(230, 230, 230, 0.2),
-        -5px -5px 10px rgba(255, 255, 255, 0.9), 5px 5px 13px rgba(230, 230, 230, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(230, 230, 230, 0.5);
-    border-radius: 25px;
-}
-
-.card:hover {
-    background: #ffffff;
-    border: 1px solid #ffffff;
-    box-sizing: border-box;
-    box-shadow: 5px 5px 13px rgba(150, 150, 150, 0.9);
-    border-radius: 25px;
-}
 
 @media screen and (min-width: 768px) {
     #container-card-room {
@@ -113,49 +67,4 @@ body {
     .card-columns {
         column-count: 1;
     }
-}
-
-.card-search {
-    min-height: 75vh;
-    background: #ffffff;
-    box-shadow: -5px 5px 10px rgba(230, 230, 230, 0.2), 5px -5px 10px rgba(230, 230, 230, 0.2),
-        -5px -5px 10px rgba(255, 255, 255, 0.9), 5px 5px 13px rgba(230, 230, 230, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(230, 230, 230, 0.5);
-    border-radius: 25px;
-    .search-zone {
-        background: #ffffff;
-        box-shadow: -1px 1px 2px rgba(102, 102, 102, 0.2), 1px -1px 2px rgba(102, 102, 102, 0.2),
-            -1px -1px 2px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(102, 102, 102, 0.9),
-            inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(102, 102, 102, 0.5);
-        border-radius: 25px;
-    }
-}
-
-.list-group-item {
-    border: none;
-}
-
-#formation-search-zone {
-    background-image: url(../icons/Vector.svg);
-    background-size: 1rem 1rem;
-    background-position: 1rem;
-    background-repeat: no-repeat;
-    padding-left: 2.5rem;
-}
-
-.form-control{
-    border:none;
-    border-bottom: 1px solid #b1b1b1;
-    padding-left:0;
-}
-
-
-.form-control:focus {
-    color: #495057;
-    background-color: #f4f4f4;
-    border-color:unset; 
-    outline: 0;
-    box-shadow: unset;
-    border-bottom: 1px solid #515151;
-    padding-left:1rem;
 }

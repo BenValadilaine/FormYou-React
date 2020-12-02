@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.scss";
 
 
 const FormGroup = ({ label, inputName, inputId, inputType, placeholder }) => {

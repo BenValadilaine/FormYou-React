@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { capitalize } from "../../helpers/string";
-
+import "./index.scss";
 
 const Formation = ({ id, title, description, created_at, updated_at }) => {
 
