@@ -2,7 +2,6 @@ import React from "react";
 import AddIcon from "../../../assets/icons/plus.svg";
 import EditIcon from "../../../assets/icons/edit.svg";
 
-
 const LessonsDashboard = () => {
 	return (
 		<div>
@@ -33,13 +32,9 @@ const LessonsDashboard = () => {
 							d'application web monopage, via la création de composants
 							dépendant d'un état et générant une page (ou portion) HTML à
 							chaque changement d'état.
-                        </td>
+						</td>
 						<td>L'ami Paul</td>
-<<<<<<< HEAD
-						<td>Développement web</td>
-=======
 						<td>Developpement web</td>
->>>>>>> 35d749a554338991250272ec752652731a8b4754
 						<td>18/12/2020</td>
 						<td>
 							<a href="#">
