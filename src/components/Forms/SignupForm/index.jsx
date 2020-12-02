@@ -94,11 +94,11 @@ const SignupForm = () => {
 								<>
 
 
-									<FormGroup label="Prenom:" inputName="firstname" inputId="firstname" inputType="text" />
+									<FormGroup label="Prenom:" inputName="firstname" inputId="firstname" inputType="text" placeholder="John" />
 
-									<FormGroup label="Nom:" inputName="lastname" inputId="lastname" inputType="text" />
+									<FormGroup label="Nom:" inputName="lastname" inputId="lastname" inputType="text" placeholder="Doe" />
 
-									<FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" />
+									<FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" placeholder="email@example.com" />
 									<FormGroup label="Mot de passe:" inputName="password" inputId="password" inputType="password" />
 									<FormGroup label="Confirmer le mot de passe:" inputName="password_confirmation" inputId="password_confirmation" inputType="password" />
 

@@ -26,7 +26,7 @@ const SigninForm = () => {
 
             <h1 className="my-5">CONNEXION</h1>
 
-            <FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" />
+            <FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" placeholder="email@example.com" />
             <FormGroup label="Mot de passe:" inputName="password" inputId="password" inputType="password" />
 
 
