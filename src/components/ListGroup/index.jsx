@@ -1,26 +1,27 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { capitalize } from "../../helpers/string";
 import ListGroupItem from '../ListGroupItem/index';
 
-const ListGroup = ({ }) => {
+const ListGroup = ({ categories, searchFilters }) => {
 
 
     const [activeFilters, setActiveFilters] = useState([]);
 
     const handleFilter = (value) => {
         if (activeFilters.find((e) => e.id === value.id)) {
-            let updatedFilter = activeFilters.find((e) => e.id === value.id);
             let otherFilters = activeFilters.filter((e) => e.id != value.id);
-            updatedFilter = { ...updatedFilter, ...value };
-            setActiveFilters([...otherFilters, updatedFilter])
+            setActiveFilters([...otherFilters])
         } else {
             setActiveFilters([...activeFilters, value]);
         }
 
     }
 
-    useEffect(()=>{
 
-        console.log(activeFilters)
+
+    useEffect(() => {
+
+        searchFilters(activeFilters);
 
     }, [activeFilters])
 
@@ -30,9 +31,11 @@ const ListGroup = ({ }) => {
 
 
             {
-                Array.from(Array(10).keys()).map((e) => {
+                categories.map((category) => {
 
-                    return <ListGroupItem key={e} name={`category_${e}`} id={e} text={`Categorie ${e}`} handleFilter={(value) => { handleFilter(value) }} />
+                    let { id, name, created_at, updated_at } = category;
+
+                    return <ListGroupItem key={id} name={name} id={id} text={capitalize(name)} handleFilter={(value) => { handleFilter(value) }} />
 
                 })
             }
