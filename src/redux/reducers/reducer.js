@@ -1,5 +1,4 @@
 import deepCloneObject from "../../helpers/deepClone";
-import Cookies from "js-cookie"
 
 const initialState = {
   current_user: {}
