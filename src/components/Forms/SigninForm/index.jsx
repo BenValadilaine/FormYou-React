@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 const SigninForm = () => {
 
   //STATES
-  const [userDatas, setUserDatas] = useState({});
+  const [userDatas, setUserDatas] = useState(null);
 
   // importing dipatch actions
 	const dispatch = useDispatch();
@@ -21,17 +21,26 @@ const SigninForm = () => {
 	const history = useHistory();
 
   //analysing submit form
-  const handleClick = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    const email = document.querySelector("#email").value;
-    const password = document.querySelector("#password").value;
+    const form = event.currentTarget;
+    const formdata = new FormData(form);
+
+    const email = formdata.get("email");
+    const password = formdata.get("password");
 
     setUserDatas({...userDatas, email: email, password: password});
-    handleRegistration();
   }
 
+  // launch handle registration when userdatas update
+  useEffect(() => {
+    handleRegistration();
+  }, [userDatas])
+
   const handleRegistration = async () => {
+
+    if (!userDatas) { return }
 
     // destructuring object userDatas state containing user registration infos
     const { email, password } = userDatas
@@ -73,38 +82,20 @@ const SigninForm = () => {
       <div className="row col-12 border-0 p-0 border-neumorphic">
 
         <div className="col-6 p-0 d-none d-lg-block" style={{ height: "75vh" }}>
-
-
           <img src={signinImage} alt="signin image" className="h-100 w-100 m-0 p-0" />
-
-
-
         </div>
 
         <div className="col-lg-6 col-12 bg-white p-4 d-flex flex-column justify-content-around" style={{ height: "75vh" }}>
-
-
-          <form action="">
-
-
+          <form action="" onSubmit={handleSubmit}>
             <h1 className="my-5">CONNEXION</h1>
-
             <FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" placeholder="email@example.com" />
             <FormGroup label="Mot de passe:" inputName="password" inputId="password" inputType="password" />
-
-
-            <button className="btn btn-scheme-2 btn-lg col-12 my-4" type="submit" onClick={(event) => handleClick(event)}>VALIDER</button>
-
-
-
+            <button className="btn btn-scheme-2 btn-lg col-12 my-4" type="submit" >VALIDER</button>
           </form>
-
         </div>
 
-
       </div>
-
-
+      
     </div>
   );
 };
