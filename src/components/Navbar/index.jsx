@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import "./index.scss";
-import { Cookies } from 'js-cookie';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
 
 	const handleSignOut = async () => {
-		let response = await API_REQUEST.delete(API_ENDPOINTS['signout'], true, Cookies.get("jwt_token"));
-		Cookies.remove('jwt_token');
+		if (Cookies.get("jwt_token")) {
+			let response = await API_REQUEST.delete(API_ENDPOINTS['signout'], true, Cookies.get("jwt_token"));
+			Cookies.remove('jwt_token');
+		}
 	}
 
 	return (
