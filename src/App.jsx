@@ -82,6 +82,7 @@ const App = () => {
 						<UnAuthRoute path="/signup" component={SignupPage} />
 						<Profile />
 						<AuthRoute path="/profile" component={Profile} />
+						<UnAuthRoute path="/admin" component={Admin} />
 					</Switch>
 				</section>
 			</Router>
