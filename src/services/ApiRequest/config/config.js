@@ -4,13 +4,14 @@ import jwt_decode from "jwt-decode";
 const API_BASE_URL = "https://form-you-api.herokuapp.com/api"
 
 const API_ENDPOINTS = {
-    "signup":"/signup",
-    "signin":"/login",
-    "signout":"/logout",
-    "formations":"/formations",
-    "roles":"/roles",
-    "categories":"/categories",
-    "formation_attendances":"/formation_attendances"
+    "users": "/users",
+    "signup": "/signup",
+    "signin": "/login",
+    "signout": "/logout",
+    "formations": "/formations",
+    "roles": "/roles",
+    "categories": "/categories",
+    "formation_attendances": "/formation_attendances"
 }
 
 
