@@ -24,13 +24,11 @@ const FormationsPage = () => {
     // FETCH AND SET FORMATION STATE AT FIRST LOAD OF THE PAGE (NO DEPENDENCIES)
     useEffect(() => {
 
-
         const setCategoriesANdFormations = async () => {
             fetchAndSetFormations()
-            const categories_datas = await API_REQUEST.find(API_ENDPOINTS["categories"])
-            setCategories(categories_datas);
+            const categories = await API_REQUEST.find(API_ENDPOINTS["categories"])
+            setCategories(categories);
         }
-
         setCategoriesANdFormations()
 
 
@@ -42,13 +40,11 @@ const FormationsPage = () => {
 
         const fetchFormations = async () => {
             setFormations([]);
-            const promises = searchFilters.map((e) => API_REQUEST.find(API_ENDPOINTS["categories"] + `/${e.id}`));
-            const results = await Promise.all(promises).then((results) => results);
-
-            const final_results = [];
-            results.map((formationList) => formationList.map((formation) => final_results.push(formation)));
-
-            final_results.length > 0 ? setFormations(final_results) : fetchAndSetFormations();
+            const category_promises = searchFilters.map((category_promise) => API_REQUEST.find(API_ENDPOINTS["categories"] + `/${category_promise.id}`));
+            const categories = await Promise.all(category_promises).then((results) => results);
+            const formations = [];
+            categories.map((nested_formations) => nested_formations.map((formation) => formations.push(formation)));
+            formations.length > 0 ? setFormations(formations) : fetchAndSetFormations();
         }
 
         fetchFormations();
