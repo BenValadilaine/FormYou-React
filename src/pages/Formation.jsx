@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import CardFormationDetail from '../components/CardFormationDetail';
 import FormationSessionCalendar from '../components/FormationSessionCalendar';
+import { useContext } from 'react';
+import modalContext from '../context/modalContext';
+import { useEffect } from 'react';
 
 
 const FormationPage = () => {
 
   const { id } = useParams();
+
+  const { isModalOpen } = useContext(modalContext);
+
 
 
   const [formation, setFormation] = useState(null);
@@ -14,7 +20,7 @@ const FormationPage = () => {
 
   return (
 
-    <div className="container-fluid m-auto d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "95vh" }}>
+    <div className={`container-fluid m-auto d-flex flex-column justify-content-center align-items-center ${isModalOpen && 'mask'}`} style={{ minHeight: "95vh" }}>
 
       <h2 className="align-self-start px-4">Choisir une session de formation :</h2>
 
@@ -31,7 +37,7 @@ const FormationPage = () => {
         </div>
 
 
-        <div className="col-lg-4 offset-lg-1 col-12 border-neumorphic bg-white p-4 d-flex flex-column border-rounded" style={{height:"max-content", maxHeight: "75vh" }}>
+        <div className="col-lg-4 offset-lg-1 col-12 border-neumorphic bg-white p-4 d-flex flex-column border-rounded" style={{ height: "max-content", maxHeight: "75vh" }}>
 
 
           <CardFormationDetail formation_id={id} formation={formation} formation_details={(value) => setFormation(value)} />
