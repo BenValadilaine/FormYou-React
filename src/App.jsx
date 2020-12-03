@@ -32,7 +32,7 @@ const App = () => {
 		<Route
 			{...rest}
 			render={(props) =>
-				!isUserSignIn() ? (
+				isUserSignIn() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
 						<Component {...props} />
