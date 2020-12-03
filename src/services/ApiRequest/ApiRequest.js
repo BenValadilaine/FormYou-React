@@ -38,8 +38,7 @@ class ApiRequest {
     // WRAPPER POST CREATE METHOD
     async create(datas, endpoint, authenticated = false, jwt_token = null) {
         this.endpoint = this.base_url + endpoint;
-        console.log(datas)
-        console.log(this.endpoint)
+
         let response = await this.request("POST", datas, authenticated, jwt_token);
         return response;
     }

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import "./index.scss";
 import Cookies from "js-cookie";
+import { removeCurrentUser } from "../../redux/actions";
 
 const Navbar = () => {
+	const [isConnected, setIsConnected] = useState(false);
+	const dispatch = useDispatch();
+	const currentUser = useSelector((state) => state.current_user);
+
 	const handleSignOut = async () => {
 		if (Cookies.get("jwt_token")) {
 			let response = await API_REQUEST.delete(
@@ -14,6 +21,7 @@ const Navbar = () => {
 				Cookies.get("jwt_token"),
 			);
 			Cookies.remove("jwt_token");
+			dispatch(removeCurrentUser());
 		}
 	};
 
@@ -40,14 +48,7 @@ const Navbar = () => {
 							Les formations
 						</Link>
 					</li>
-					{
-						//toogle off if connected
-						<li className="nav-item">
-							<Link to="/signup" className="nav-link">
-								Nous rejoindre
-							</Link>
-						</li>
-					}
+
 					<li className="nav-item">
 						<Link to="/contact" className="nav-link">
 							Nous contacter
@@ -56,31 +57,41 @@ const Navbar = () => {
 				</ul>
 
 				<ul className="navbar-nav flex mr-5" id="nav-connect">
-					{
-						// toogle off if connected
-						<li className="nav-item">
-							<Link to="/signin" className="nav-link">
-								Se connecter
-							</Link>
-						</li>
-					}
+					{!currentUser && (
+						<>
+							<li className="nav-item">
+								<Link to="/signup" className="nav-link">
+									Nous rejoindre
+								</Link>
+							</li>
 
-					{
-						// toogle on if connected
-						<li className="nav-item">
-							<Link to="/profile" className="nav-link">
-								Mon Profil
-							</Link>
-						</li>
-					}
-					{
-						// toogle on if connected / make of it an "onclick" button that targets a logout function
-						<li className="nav-item">
-							<a href="#" onClick={() => handleSignOut()} className="nav-link">
-								Se déconnecter
-							</a>
-						</li>
-					}
+							<li className="nav-item">
+								<Link to="/signin" className="nav-link">
+									Se connecter
+								</Link>
+							</li>
+						</>
+					)}
+
+					{currentUser && (
+						<>
+							<li className="nav-item">
+								<Link to="/profile" className="nav-link">
+									Mon Profil
+								</Link>
+							</li>
+
+							<li className="nav-item">
+								<a
+									href="#"
+									onClick={() => handleSignOut()}
+									className="nav-link"
+								>
+									Se déconnecter
+								</a>
+							</li>
+						</>
+					)}
 				</ul>
 			</div>
 		</nav>
