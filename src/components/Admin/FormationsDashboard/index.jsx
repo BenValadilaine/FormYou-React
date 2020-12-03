@@ -130,7 +130,7 @@ const LessonsDashboard = () => {
 
 	const deleteFormation = async (formation) => {
 	
-		//request to DELETE /users
+		//request to DELETE /formations
 		const response = await API_REQUEST.delete(
 			`/formations/${formation.id}`,
 			true,
