@@ -41,7 +41,7 @@ const LessonsDashboard = () => {
 		handleTeachers();
 		handleCategories();
 		handleFormationCategories();
-	}, [show])
+	}, [show, showCreateModal])
 
 
 	const handleFormations = async () => {
@@ -76,14 +76,13 @@ const LessonsDashboard = () => {
 		setFormationCategories(response);
 	}
 
-	const createFormationCategories = async (id) => {
+	const createFormationCategories = async (id, formation_id) => {
 		//request to POST /categories
-		console.log(formationSelected.id)
 		const response = await API_REQUEST.create(
 			{
 				formation_category: {
 					category_id: id,
-					formation_id: formationSelected.id
+					formation_id: formation_id
 				}
 			},
 			`/formation_categories`,
@@ -103,10 +102,11 @@ const LessonsDashboard = () => {
 		const title = formdata.get("formation-title");
 		const description = formdata.get("formation-description");
 		const teacher_id = formdata.get("teacher-select");
-		categories_id.push(formdata.get("categories-select"));
+		categories_id.push(formdata.getAll("categories-select"));
+		console.log(categories_id)
 
 		
-		//request to PUT /users
+		//request to POST /formations
 		const response = await API_REQUEST.create(
 			{
 				formation: {
@@ -120,7 +120,11 @@ const LessonsDashboard = () => {
 			Cookies.get("jwt_token")
 		).then((e)=>e.json());
 		
-		console.log(response)
+		categories_id[0].forEach((category_id) => {
+			createFormationCategories(category_id, response.id);
+		})
+
+		handleCloseCreateModal();
 
 	}
 
@@ -147,7 +151,7 @@ const LessonsDashboard = () => {
 		const title = formdata.get("formation-title");
 		const description = formdata.get("formation-description");
 		const teacher_id = formdata.get("teacher-select");
-		categories_id.push(formdata.get("categories-select"));
+		categories_id.push(formdata.getAll("categories-select"));
 
 		
 		//request to PUT /users
@@ -164,8 +168,8 @@ const LessonsDashboard = () => {
 			Cookies.get("jwt_token")
 			);
 
-		categories_id.forEach((category_id) => {
-			createFormationCategories(category_id);
+		categories_id[0].forEach((category_id) => {
+			createFormationCategories(category_id, formationSelected.id);
 		})
 		handleClose();
 	}
