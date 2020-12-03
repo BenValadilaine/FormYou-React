@@ -17,12 +17,14 @@ import Admin from './pages/Admin';
 import isUserSignIn from './helpers/signActions';
 import modalContext from "./context/modalContext";
 import Modal from './components/Modal/index';
+import ModalContentEvent from './components/ModalContentEvent/index';
 
 
 const App = () => {
 
 	const [isModalOpen, setModalIsOpen] = useState(false);
-	const [modalContent, setModalContent] = useState("default")
+	const [modalContent, setModalContent] = useState(null);
+	const [modalDatas, setModalDatas] = useState(null)
 
 
 	//Private routes who do not need authentification
@@ -54,7 +56,9 @@ const App = () => {
 	);
 
 	return (
-		<modalContext.Provider value={{ isModalOpen, setModalIsOpen, modalContent, setModalContent }}>
+
+
+		<modalContext.Provider value={{ isModalOpen, setModalIsOpen, modalContent, setModalContent, setModalDatas }}>
 			<div className="App">
 				<Router>
 					<Navbar />
@@ -75,9 +79,9 @@ const App = () => {
 							<AuthRoute path="/admin" component={Admin} />
 						</Switch>
 					</section>
+					<Modal modalContent={modalContent} datas={modalDatas} />
 				</Router>
 			</div>
-			<Modal/>
 		</modalContext.Provider>
 	);
 };

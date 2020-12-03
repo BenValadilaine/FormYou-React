@@ -9,7 +9,8 @@ const API_ENDPOINTS = {
     "signout":"/logout",
     "formations":"/formations",
     "roles":"/roles",
-    "categories":"/categories"
+    "categories":"/categories",
+    "formation_attendances":"/formation_attendances"
 }
 
 
