@@ -5,13 +5,20 @@ import API_REQUEST from "../../services/ApiRequest/ApiRequest";
 import Cookies from 'js-cookie';
 import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import isUserSignIn from '../../helpers/signActions';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import modalContext from "../../context/modalContext";
-import useRedirectToUrl from '../../helpers/redirect';
 
 // TO SEE PORTAL
 
 const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...rest }) => {
+
+    const history = useHistory()
+
+    // helper to for redirection redirect
+    const redirect = (url) => {
+        history.push(url)
+
+    }
 
     // ressource object as 
     // resource:
@@ -25,8 +32,6 @@ const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...r
     // }
     // method to subscribe current user to a formation of his choice
     const handleUserSubscription = async ({ formation_id, id }) => {
-
-        const redirect = useRedirectToUrl;
 
         if (isUserSignIn()) {
             const datas = {

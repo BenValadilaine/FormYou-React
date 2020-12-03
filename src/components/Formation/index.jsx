@@ -2,12 +2,18 @@ import React from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { capitalize } from "../../helpers/string";
 import "./index.scss";
-import useRedirectToUrl from '../../helpers/redirect';
 
 const Formation = ({ id, title, description, created_at, updated_at }) => {
 
     
-    const redirect = useRedirectToUrl;
+    const history = useHistory()
+
+    // helper to for redirection redirect
+    const redirect = (url) => {
+        history.push(url)
+
+    }
+
 
     return (
         <div className="card p-4 border-rounded" onClick={() => redirect(`/formation/${id}`)} id={id}>
