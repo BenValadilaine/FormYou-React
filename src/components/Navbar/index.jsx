@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -9,7 +9,6 @@ import Cookies from "js-cookie";
 import { removeCurrentUser } from "../../redux/actions";
 
 const Navbar = () => {
-	const [isConnected, setIsConnected] = useState(false);
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.current_user);
 
