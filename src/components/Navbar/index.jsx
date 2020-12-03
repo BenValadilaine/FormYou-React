@@ -5,8 +5,6 @@ import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import "./index.scss";
 import Cookies from "js-cookie";
 
-import isAdmin from "../../helpers/isAdmin";
-
 const Navbar = () => {
 	const handleSignOut = async () => {
 		if (Cookies.get("jwt_token")) {
@@ -24,7 +22,6 @@ const Navbar = () => {
 			<Link to="/" className="navbar-brand" id="nav-brand" title="home">
 				FormYou
 			</Link>
-			<button onClick={() => isAdmin()}>isAdmin</button>
 			<button
 				className="navbar-toggler"
 				type="button"
