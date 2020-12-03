@@ -17,7 +17,6 @@ const Navbar = () => {
 	// helper to for redirection redirect
 	const redirect = (url) => {
 		history.push(url)
-
 	}
 
 	const handleSignOut = async () => {
@@ -29,7 +28,8 @@ const Navbar = () => {
 			);
 			Cookies.remove("jwt_token");
 			dispatch(removeCurrentUser());
-			redirect('/');
+			localStorage.removeItem("current_user");
+			redirect('/')
 		}
 	};
 

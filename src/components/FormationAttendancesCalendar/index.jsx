@@ -8,6 +8,9 @@ import modalContext from "../../context/modalContext";
 import ModalContentEvent from '../ModalContentEvent/index';
 import jwt_decode from 'jwt-decode';
 import Cookies from 'js-cookie';
+import { useLocation } from "react-router-dom";
+import useCurrentLocation from "../../hooks/useCurrentLocation";
+import useCurrentUserId from '../../hooks/useCurrentUserId';
 const localizer = momentLocalizer(moment)
 
 
@@ -20,9 +23,13 @@ const FormationAttendancesCalendar = () => {
     // whether its an "all day" event or not
     // any resource the event may be a related too
 
+    const userId = useCurrentUserId();
+
     const [fomationsAttendances, setfomationsAttendances] = useState([]);
 
-    const [userRole, setUserRole] = useState("")
+    const [userRole, setUserRole] = useState("");
+
+    const currentLocation = useCurrentLocation()
 
     const { isModalOpen, setModalIsOpen, setModalContent, setModalDatas } = useContext(modalContext);
 
@@ -30,7 +37,8 @@ const FormationAttendancesCalendar = () => {
     //{title: "Super formation", start: "2020-12-02T08:54:20.396Z", end: "2020-12-03T08:54:20.396Z, allDay:true}
 
     const handleSelectEvent = (event) => {
-        setModalDatas({ ...event })
+
+        setModalDatas({ ...event, currentLocation: currentLocation.pathname })
         setModalContent(() => {
             return ModalContentEvent;
         })
@@ -38,20 +46,24 @@ const FormationAttendancesCalendar = () => {
     }
 
 
+    useEffect(() => {
+
+        const fetchUserRole = async () => {
+            const user_role = await API_REQUEST.find(API_ENDPOINTS['users'] + `/${userId}/roles`);
+            setUserRole(user_role.name);
+        }
+
+        fetchUserRole();
+
+    }, [])
 
 
     useEffect(() => {
 
+
         const fetchFormationAttendances = async () => {
 
-            const user_id = jwt_decode(Cookies.get('jwt_token')).sub;
-
-            const user_role = await API_REQUEST.find(API_ENDPOINTS['users'] + `/${user_id}/roles`);
-
-            setUserRole(user_role.name);
-
-            if (user_role === "student") {
-                const formation_attendances = await API_REQUEST.find(API_ENDPOINTS["users"] + `/${user_id}/formation_attendances`);
+                const formation_attendances = await API_REQUEST.find(API_ENDPOINTS["users"] + `/${userId}/formation_attendances`);
 
                 const promises_formations = await formation_attendances.map((formation_attendance) => API_REQUEST.find(API_ENDPOINTS["formations"] + `/${formation_attendance.formation_id}`));
 
@@ -77,14 +89,15 @@ const FormationAttendancesCalendar = () => {
                     }
                 });
 
-                setfomationsAttendances(formation_sessions);
-            } else {
+            setfomationsAttendances(formation_sessions);
+
+            if (userRole == "teacher") {
                 const formations = await API_REQUEST.find(API_ENDPOINTS["formations"]);
 
-                const teacher_formations = formations.filter((formation) => formation.teacher_id === user_id)
+                const teacher_formations = formations.filter((formation) => formation.teacher_id === userId)
 
                 // TEST PURPOSES WITH ALL FORMATIONS
-                // const teacher_formations = formations.filter((formation) => formation.teacher_id != user_id)
+                // const teacher_formations = formations.filter((formation) => formation.teacher_id != userId)
 
 
                 if (teacher_formations.length > 0) {
@@ -116,7 +129,7 @@ const FormationAttendancesCalendar = () => {
                         }
                     });
 
-                    setfomationsAttendances(formation_sessions);
+                    setfomationsAttendances([...fomationsAttendances, ...formation_sessions]);
                 }
 
             }
@@ -125,7 +138,7 @@ const FormationAttendancesCalendar = () => {
 
         fetchFormationAttendances()
 
-    }, [])
+    }, [userRole])
 
 
     return (

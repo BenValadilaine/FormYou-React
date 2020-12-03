@@ -15,10 +15,10 @@ const SigninForm = () => {
   const [userDatas, setUserDatas] = useState(null);
 
   // importing dipatch actions
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	// importing history form react router dom
-	const history = useHistory();
+  // importing history form react router dom
+  const history = useHistory();
 
   //analysing submit form
   const handleSubmit = (event) => {
@@ -30,7 +30,7 @@ const SigninForm = () => {
     const email = formdata.get("email");
     const password = formdata.get("password");
 
-    setUserDatas({...userDatas, email: email, password: password});
+    setUserDatas({ ...userDatas, email: email, password: password });
   }
 
   // launch handle registration when userdatas update
@@ -57,22 +57,25 @@ const SigninForm = () => {
 
     // accessing jwt token
     const jwt = response.headers.get("Authorization");
-    Cookies.set("jwt_token", jwt)
 
-    // accessing data of response
-    const data = await response.json();
-    const {email: userEmail} = data.data.attributes;
-    const {id: userId} = data.data;
+    if (jwt) {
+      Cookies.set("jwt_token", jwt)
 
-    // constructing payload
-    const payload = {
-      id: userId, email: userEmail
+      // accessing data of response
+      const data = await response.json();
+      const { email: userEmail } = data.data.attributes;
+      const { id: userId } = data.data;
+
+      // constructing payload
+      const payload = {
+        id: userId, email: userEmail
+      }
+
+      // dispatching action to redux store
+      dispatch(setCurrentUser(payload));
+      localStorage.setItem("current_user", JSON.stringify(payload));
+      history.push("/")
     }
-
-    // dispatching action to redux store
-    dispatch(setCurrentUser(payload));
-
-    history.push("/")
   }
 
   return (

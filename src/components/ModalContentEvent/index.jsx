@@ -7,10 +7,12 @@ import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import isUserSignIn from '../../helpers/signActions';
 import { Link, useHistory } from 'react-router-dom';
 import modalContext from "../../context/modalContext";
+import useCurrentUserId from '../../hooks/useCurrentUserId';
+import useCurrentUserJwtToken from '../../hooks/useCurrentUserJwtToken';
+import useCurrentLocation from '../../hooks/useCurrentLocation';
 
-// TO SEE PORTAL
 
-const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...rest }) => {
+const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, currentLocation, ...rest }) => {
 
     const history = useHistory()
 
@@ -20,16 +22,15 @@ const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...r
 
     }
 
-    // ressource object as 
-    // resource:
-    // {
-    // // capacity: 17
-    // // created_at: "2020-12-02T08:54:20.402Z"
-    // // formation_id: 1
-    // // id: 3
-    // // room_id: 9
-    // // updated_at: "2020-12-02T08:54:20.402Z"
-    // }
+    // Custom hook to get currentuserId
+    const userId = useCurrentUserId();
+    // Custom hook to get current user jwt token
+    const userJwtToken = useCurrentUserJwtToken();
+    const appPath = useCurrentLocation();
+    // context method to set modal opened or closed
+    const { setModalIsOpen } = useContext(modalContext)
+
+
     // method to subscribe current user to a formation of his choice
     const handleUserSubscription = async ({ formation_id, id }) => {
 
@@ -40,8 +41,9 @@ const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...r
                     "formation_session_id": `${id}`
                 }
             }
-            const response = await API_REQUEST.create(datas, API_ENDPOINTS['formation_attendances'], true, Cookies.get('jwt_token'));
+            const response = await API_REQUEST.create(datas, API_ENDPOINTS['formation_attendances'], true, userJwtToken);
             if (response.status == 201) {
+                setModalIsOpen(false)
                 redirect("/profile")
             }
         } else {
@@ -50,7 +52,21 @@ const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...r
 
     }
 
-    const { setModalIsOpen } = useContext(modalContext)
+    // method to unsubscribe current user to an attendance of his choice
+    const handleUserUnSubscription = async ({ formation_attendance }) => {
+        if (isUserSignIn()) {
+
+            const response = await API_REQUEST.delete(API_ENDPOINTS['formation_attendances'] + `/${formation_attendance.id}`, true, userJwtToken);
+
+            if (response.ok) {
+                setModalIsOpen(false)
+            }
+
+        } else {
+            console.log("You have to be signed in to make this action")
+        }
+
+    }
 
     return (
         <>
@@ -69,18 +85,37 @@ const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...r
             <h5>{seatLeft && seatLeft}</h5>
 
             {
-                isUserSignIn() ?
+                isUserSignIn() && appPath == "/profile" &&
+
+                (
+                    <div className="row">
+                        <button className="btn btn-scheme-2 btn-lg col-12 my-4" onClick={() => handleUserUnSubscription(resource)} type="submit" >ANNULER</button>
+                    </div>
+                )
+
+            }
+
+            {
+                isUserSignIn() && appPath != "/profile" &&
+                (
+
                     (
                         <div className="row">
                             <button className="btn btn-scheme-2 btn-lg col-12 my-4" onClick={() => handleUserSubscription(resource)} type="submit" >JE PARTICIPE</button>
                         </div>
                     )
 
-                    : (
-                        <div className="row">
-                            <Link to="/signin" className="btn btn-scheme-2 btn-lg col-12 my-4" onClick={() => setModalIsOpen(false)}>SE CONNECTER</Link>
-                        </div>
-                    )
+                )
+            }
+
+            {
+                !isUserSignIn() &&
+                (
+                    <div className="row">
+                        <Link to="/signin" className="btn btn-scheme-2 btn-lg col-12 my-4" onClick={() => setModalIsOpen(false)}>SE CONNECTER</Link>
+                    </div>
+                )
+
             }
 
 

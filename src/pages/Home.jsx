@@ -1,5 +1,6 @@
 import React from 'react';
 // import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -27,7 +28,8 @@ const Home = () => {
           <h3 className="text-dark-light">Des aides sont possibles, demander conseil à nos experts ...</h3>
 
           <div>
-            <button className="btn btn-lg col-md-4 col-12 btn-scheme">Les formations</button>
+
+            <Link to="/formations" exact className="btn btn-lg col-md-4 col-12 btn-scheme" >Les Formations</Link>
           </div>
 
         </div>

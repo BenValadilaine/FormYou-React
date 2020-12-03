@@ -72,7 +72,7 @@ const EditProfileForm = ({ }) => {
     }, [])
 
     return (
-        <form action="">
+        <form action="" className="overflow-auto">
 
             <h1 className="text-center">Votre profil</h1>
 
