@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import "./index.scss";
 import Cookies from "js-cookie";
-import { removeCurrentUser } from "../../redux/actions"
+import { removeCurrentUser } from "../../redux/actions";
 
 const Navbar = () => {
-	const [isConnected, setIsConnected] = useState(false);
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.current_user);
 	const history = useHistory()

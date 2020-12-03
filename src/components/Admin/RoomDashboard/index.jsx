@@ -1,13 +1,12 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import AddIcon from "../../../assets/icons/plus.svg";
 import EditIcon from "../../../assets/icons/edit.svg";
 import TrashIcon from "../../../assets/icons/trash.svg";
 import { Modal, Button } from "react-bootstrap";
-import API_REQUEST from '../../../services/ApiRequest/ApiRequest';
+import API_REQUEST from "../../../services/ApiRequest/ApiRequest";
 import Cookies from "js-cookie";
 
 const RoomDashboard = () => {
-
 	//STATES
 	const [show, setShow] = useState(false);
 	const [showCreateModal, setShowCreateModal] = useState(false);
@@ -17,32 +16,30 @@ const RoomDashboard = () => {
 	const handleClose = () => {
 		setRoomSelected({});
 		setShow(false);
-	}
+	};
 
 	const handleCloseCreateModal = () => {
 		setShowCreateModal(false);
-	}
+	};
 
-	const handleShow = (room) =>  {
+	const handleShow = (room) => {
 		setRoomSelected(room);
 		setShow(true);
-	}
+	};
 
-	const handleShowCreateModal = () =>  {
+	const handleShowCreateModal = () => {
 		setShowCreateModal(true);
-	}
+	};
 
 	const handleRooms = async () => {
-	
 		// request to /formations
 		const response = await API_REQUEST.find("/rooms");
 		setRooms(response);
-	}
+	};
 
 	const createRoom = async (event) => {
 		event.preventDefault();
 		const form = event.currentTarget;
-		const categories_id = new Array;
 		const formdata = new FormData(form);
 
 		const name = formdata.get("room-name");
@@ -51,58 +48,54 @@ const RoomDashboard = () => {
 		const response = await API_REQUEST.create(
 			{
 				room: {
-					name: name
-				}
+					name: name,
+				},
 			},
 			`/rooms`,
 			true,
-			Cookies.get("jwt_token")
-		)
+			Cookies.get("jwt_token"),
+		);
 
 		handleCloseCreateModal();
-
-	}
+	};
 
 	useEffect(() => {
 		handleRooms();
-	}, [show, showCreateModal])
-
+	}, [show, showCreateModal]);
 
 	const deleteRoom = async (room) => {
 		//request to DELETE /rooms
 		const response = await API_REQUEST.delete(
 			`/rooms/${room.id}`,
 			true,
-			Cookies.get("jwt_token")
-			);
+			Cookies.get("jwt_token"),
+		);
 
-		handleRooms()
-	}
+		handleRooms();
+	};
 
 	const editRoom = async (event) => {
 		event.preventDefault();
 
 		const form = event.currentTarget;
-		const categories_id = new Array;
 		const formdata = new FormData(form);
 
 		const name = formdata.get("room-name");
 
-		
 		//request to PUT /rooms
 		const response = await API_REQUEST.update(
 			{
 				room: {
-					name: name
-				}
+					name: name,
+				},
 			},
 			`/rooms/${roomSelected.id}`,
 			true,
-			Cookies.get("jwt_token")
-			);
+			Cookies.get("jwt_token"),
+		);
 
 		handleClose();
-	}
+	};
 
 	return (
 		<div>
@@ -125,7 +118,7 @@ const RoomDashboard = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{  rooms.map((room) => (
+					{rooms.map((room) => (
 						<tr>
 							<td scope="row">{room.id}</td>
 							<td>{room.name}</td>
@@ -152,20 +145,20 @@ const RoomDashboard = () => {
 								</a>
 							</td>
 						</tr>
-					))
-					}
+					))}
 				</tbody>
 			</table>
 
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-				<Modal.Title>{roomSelected.name}</Modal.Title>
+					<Modal.Title>{roomSelected.name}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<form onSubmit={editRoom}>
 						<p>Editer la salle de classe</p>
-						
-						<input name="room-name" type="text" placeholder="Nouveau nom" /><br />
+
+						<input name="room-name" type="text" placeholder="Nouveau nom" />
+						<br />
 						<Button variant="success" type="submit">
 							Valider
 						</Button>
@@ -178,12 +171,12 @@ const RoomDashboard = () => {
 
 			<Modal show={showCreateModal} onHide={handleCloseCreateModal}>
 				<Modal.Header closeButton>
-				<Modal.Title>Créer une salle de classe</Modal.Title>
+					<Modal.Title>Créer une salle de classe</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<form onSubmit={createRoom}>
-						
-						<input name="room-name" type="text" placeholder="Nom" /><br />
+						<input name="room-name" type="text" placeholder="Nom" />
+						<br />
 						<Button variant="success" type="submit">
 							Valider
 						</Button>

@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 // import { FormattedMessage } from 'react-intl';
 import signinImage from "../../../assets/img/signin.jpg";
-import FormGroup from '../../FormGroup/index';
-import API_REQUEST from '../../../services/ApiRequest/ApiRequest';
+import FormGroup from "../../FormGroup/index";
+import API_REQUEST from "../../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../../services/ApiRequest/config/config.js";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../redux/actions";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
 
 const SigninForm = () => {
+	//STATES
+	const [userDatas, setUserDatas] = useState(null);
 
-  //STATES
-  const [userDatas, setUserDatas] = useState(null);
-
-  // importing dipatch actions
-  const dispatch = useDispatch();
+	// importing dipatch actions
+	const dispatch = useDispatch();
 
   // importing history form react router dom
   const history = useHistory();
