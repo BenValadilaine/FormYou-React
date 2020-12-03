@@ -39,7 +39,7 @@ class ApiRequest {
     // WRAPPER POST CREATE METHOD
     async create(datas, endpoint, authenticated = false, jwt_token = null) {
         this.endpoint = this.base_url + endpoint;
-        let response = await this.request("POST", datas, authenticated, jwt_token)
+        let response = await this.request("POST", datas, authenticated, jwt_token);
         return response;
     }
     // WRAPPER PUT UPDATE METHOD
