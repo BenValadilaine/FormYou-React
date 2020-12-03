@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { parseDate } from "../../helpers/parseDate";
 import { capitalize } from "../../helpers/string";
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
@@ -7,6 +7,7 @@ import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import isUserSignIn from '../../helpers/signActions';
 import { Link } from 'react-router-dom';
 import modalContext from "../../context/modalContext";
+import useRedirectToUrl from '../../helpers/redirect';
 
 // TO SEE PORTAL
 
@@ -22,23 +23,26 @@ const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...r
     // // room_id: 9
     // // updated_at: "2020-12-02T08:54:20.402Z"
     // }
-
     // method to subscribe current user to a formation of his choice
-    const handleUserSubscription = ({ formation_id, id }) => {
+    const handleUserSubscription = async ({ formation_id, id }) => {
+
+        const redirect = useRedirectToUrl;
 
         if (isUserSignIn()) {
             const datas = {
-
-                formation_attendance: {
-                    formation_id,
-                    formation_session_id: id
+                "formation_attendance": {
+                    "formation_id": `${formation_id}`,
+                    "formation_session_id": `${id}`
                 }
-
             }
-            API_REQUEST.create(datas, API_ENDPOINTS['formation_attendances'], true, Cookies.get('Authorization'));
+            const response = await API_REQUEST.create(datas, API_ENDPOINTS['formation_attendances'], true, Cookies.get('jwt_token'));
+            if (response.status == 201) {
+                redirect("/profile")
+            }
         } else {
             console.log("You have to be signed in to make this action")
         }
+
     }
 
     const { setModalIsOpen } = useContext(modalContext)
@@ -52,7 +56,6 @@ const ModalContentEvent = ({ title, start, end, seatLeft, allDay, resource, ...r
             <h5>{start && parseDate(start)}</h5>
 
             <h5> Date de fin :</h5>
-
 
             <h5>{end && parseDate(end)}</h5>
 
