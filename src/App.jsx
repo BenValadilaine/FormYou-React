@@ -57,7 +57,7 @@ const App = () => {
 
 	return (
 
-		
+
 		<modalContext.Provider value={{ isModalOpen, setModalIsOpen, modalContent, setModalContent, setModalDatas }}>
 			<div className="App">
 				<Router>
@@ -79,9 +79,9 @@ const App = () => {
 							<UnAuthRoute path="/admin" component={Admin} />
 						</Switch>
 					</section>
+					<Modal modalContent={modalContent} datas={modalDatas} />
 				</Router>
 			</div>
-			<Modal modalContent={modalContent} datas={modalDatas}/>
 		</modalContext.Provider>
 	);
 };
