@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect} from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
@@ -11,14 +11,14 @@ import { removeCurrentUser } from "../../redux/actions";
 const Navbar = () => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.current_user);
-	const history = useHistory()
+	const history = useHistory();
 
 	// helper to for redirection redirect
 	const redirect = (url) => {
 		history.push(url)
 	}
 
-	const handleSignOut = async () => {
+	const handleSignOut = async (event) => {
 		if (Cookies.get("jwt_token")) {
 			let response = await API_REQUEST.delete(
 				API_ENDPOINTS["signout"],
@@ -31,6 +31,7 @@ const Navbar = () => {
 			redirect('/')
 		}
 	};
+
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light">
@@ -91,7 +92,7 @@ const Navbar = () => {
 							<li className="nav-item">
 								<a
 									href="#"
-									onClick={() => handleSignOut()}
+									onClick={(event) => handleSignOut(event)}
 									className="nav-link"
 								>
 									Se déconnecter
