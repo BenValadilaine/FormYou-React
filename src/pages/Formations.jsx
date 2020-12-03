@@ -6,43 +6,57 @@ import API_REQUEST from '../services/ApiRequest/ApiRequest';
 
 const FormationsPage = () => {
 
-
+    // STATE CONTAINING ALL FORMATIONS DISPLAYED IN THE PAGE (LEFT SIDE)
     const [formations, setFormations] = useState([]);
 
+    // STATE CONTAINING CATEGORIES DISPLAYED ON THE SEARCH CARD (RIGHT SIDE)
     const [categories, setCategories] = useState([]);
 
+    // STATE CONTAINING CURRENT FILTERS APPLIED ON THE FORMATION DISPLAY
     const [searchFilters, setSearchFilters] = useState([])
 
+    // FUNCTION TO FETCH AND SET FORMATION STATE
     const fetchAndSetFormations = async () => {
         const formation_datas = await API_REQUEST.find(API_ENDPOINTS["formations"]);
         setFormations(formation_datas);
     }
 
-    useEffect(async () => {
+    // FETCH AND SET FORMATION STATE AT FIRST LOAD OF THE PAGE (NO DEPENDENCIES)
+    useEffect(() => {
 
-        fetchAndSetFormations()
-        const categories_datas = await API_REQUEST.find(API_ENDPOINTS["categories"])
-        setCategories(categories_datas);
+
+        const setCategoriesANdFormations = async () => {
+            fetchAndSetFormations()
+            const categories_datas = await API_REQUEST.find(API_ENDPOINTS["categories"])
+            setCategories(categories_datas);
+        }
+
+        setCategoriesANdFormations()
+
 
     }, []);
 
 
+    // FETCH AND SET FORMATION STATE ACCORDING USER FILTERS
+    useEffect(() => {
 
-    useEffect(async () => {
+        const fetchFormations = async () => {
+            setFormations([]);
+            const promises = searchFilters.map((e) => API_REQUEST.find(API_ENDPOINTS["categories"] + `/${e.id}`));
+            const results = await Promise.all(promises).then((results) => results);
 
-        setFormations([]);
-        const promises = searchFilters.map((e) => API_REQUEST.find(API_ENDPOINTS["categories"] + `/${e.id}`));
-        const results = await Promise.all(promises).then((results) => results);
+            const final_results = [];
+            results.map((formationList) => formationList.map((formation) => final_results.push(formation)));
 
-        const final_results = [];
-        results.map((formationList) => formationList.map((formation) => final_results.push(formation)));
+            final_results.length > 0 ? setFormations(final_results) : fetchAndSetFormations();
+        }
 
-        final_results.length > 0 ? setFormations(final_results) : fetchAndSetFormations();
+        fetchFormations();
 
 
     }, [searchFilters])
 
-
+    // RENDER
     return (
         <div className="container-fluid m-auto d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "95vh" }}>
 
