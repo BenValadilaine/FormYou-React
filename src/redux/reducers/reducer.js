@@ -1,16 +1,15 @@
-import deepCloneObject from "../../helpers/deepClone";
-
 const initialState = {
-  current_user: {}
+  current_user: null
 }
 
 const reducer = (state = initialState, action) => {
-  const newState = deepCloneObject(state)
   switch (action.type) {
     case "SET_CURRENT_USER":
-      return newState.current_user = action.payload.current_user;
+      return {current_user: action.payload};
+    case "REMOVE_CURRENT_USER":
+      return initialState;
     default:
-      return newState;
+      return {...state};
   }
 }
 

@@ -6,6 +6,7 @@ import API_REQUEST from "../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import "./index.scss";
 import Cookies from "js-cookie";
+import { removeCurrentUser } from "../../redux/actions"
 
 const Navbar = () => {
 	const [isConnected, setIsConnected] = useState(false);
@@ -20,38 +21,9 @@ const Navbar = () => {
 				Cookies.get("jwt_token"),
 			);
 			Cookies.remove("jwt_token");
+			dispatch(removeCurrentUser());
 		}
 	};
-
-	useEffect(() => {
-
-		if (currentUser) {
-			setIsConnected(true)
-		} else {
-			if (Cookies.get("jwt_token")) {
-				const payload = { Cookies.get("jwt_token") }
-				dispatch({
-					type: "SET_CURRENT_USER",
-					payload
-				});
-			} else {
-				setIsConnected(false)
-			}
-		}
-		/*
-		const isLogged = async () => {
-			await dispatch
-		}
-
-		if (Cookies.get("jwt_token")) {
-			setIsConnected(true)
-		} else {
-			setIsConnected(false)
-		}*/
-		console.log(Cookies.get("jwt_token"));
-		console.log(isConnected);
-		console.log(currentUser);
-	}, [dispatch])
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light">
@@ -85,33 +57,41 @@ const Navbar = () => {
 				</ul>
 
 				<ul className="navbar-nav flex mr-5" id="nav-connect">
-					<li className="nav-item">
-						<Link to="/signup" className="nav-link">
-							Nous rejoindre
-						</Link>
-					</li>
+					{!currentUser && (
+						<>
+							<li className="nav-item">
+								<Link to="/signup" className="nav-link">
+									Nous rejoindre
+								</Link>
+							</li>
 
-					<li className="nav-item">
-						<Link to="/signin" className="nav-link">
-							Se connecter
-						</Link>
-					</li>
+							<li className="nav-item">
+								<Link to="/signin" className="nav-link">
+									Se connecter
+								</Link>
+							</li>
+						</>
+					)}
 
-					<li className="nav-item">
-						<Link to="/profile" className="nav-link">
-							Mon Profil
-						</Link>
-					</li>
+					{currentUser && (
+						<>
+							<li className="nav-item">
+								<Link to="/profile" className="nav-link">
+									Mon Profil
+								</Link>
+							</li>
 
-					<li className="nav-item">
-						<a
-							href="#"
-							onClick={() => handleSignOut()}
-							className="nav-link"
-						>
-							Se déconnecter
-						</a>
-					</li>
+							<li className="nav-item">
+								<a
+									href="#"
+									onClick={() => handleSignOut()}
+									className="nav-link"
+								>
+									Se déconnecter
+								</a>
+							</li>
+						</>
+					)}
 				</ul>
 			</div>
 		</nav>
