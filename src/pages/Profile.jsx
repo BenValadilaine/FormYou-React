@@ -15,7 +15,9 @@ const Profile = () => {
         <div className="col-lg-7 col-12 d-block overflow-auto bg-white p-0" id="container-card-room">
 
 
-          <FormationSessionCalendar />
+          {
+            // new component to show the user formation_attendances
+          }
 
 
         </div>

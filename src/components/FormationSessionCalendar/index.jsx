@@ -5,6 +5,7 @@ import moment from 'moment'
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import modalContext from "../../context/modalContext";
+import ModalContentEvent from '../ModalContentEvent/index';
 const localizer = momentLocalizer(moment)
 
 
@@ -20,8 +21,19 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
     const [formationsSessions, setFormationsSessions] = useState([]);
 
 
-    const {isModalOpen, setModalIsOpen} =  useContext(modalContext);
+    const { isModalOpen, setModalIsOpen, setModalContent , setModalDatas } = useContext(modalContext);
 
+    // event return datas from big calendar as 
+    //{title: "Super formation", start: "2020-12-02T08:54:20.396Z", end: "2020-12-03T08:54:20.396Z, allDay:true}
+
+    const handleSelectEvent = (event) => {
+        setModalDatas({...event, ...formation})
+        setModalContent(() => {
+            //return React.cloneElement(ModalContentEvent, {...event, ...formation})
+            return ModalContentEvent;
+        })
+        setModalIsOpen(!isModalOpen)
+    }
 
 
     useEffect(() => {
@@ -50,13 +62,15 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
         const fetchFormationSessions = async () => {
             const response = await API_REQUEST.find(API_ENDPOINTS["formations"] + `/${formation_id}/formation_sessions`);
 
-            const formation_sessions = response.map(({ start_date, end_date, room_id }) => {
+            const formation_sessions = response.map(({ start_date, end_date, ...rest }) => {
                 return {
 
                     title: formation.title,
                     start: start_date,
                     end: end_date,
-                    allDay: true
+                    allDay: true,
+                    resource: {...rest},
+
                 }
             });
 
@@ -76,7 +90,7 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
                 startAccessor="start"
                 endAccessor="end"
                 style={{ height: 500 }}
-                onSelectEvent={(event)=>{setModalIsOpen(!isModalOpen)}}
+                onSelectEvent={(event) => { handleSelectEvent(event) }}
             />
         </div>
     )
