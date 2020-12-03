@@ -13,6 +13,7 @@ const UserDashboard = () => {
 	const [userSelected, setUserSelected] = useState({});
 
 	const handleClose = () => setShow(false);
+	
 	const handleShow = (user) => {
 		setUserSelected(user)
 		setShow(true);
@@ -57,13 +58,7 @@ const UserDashboard = () => {
 
 		handleUsers()
 	}
- 	 /*
-    async delete(endpoint, authenticated = true, jwt_token = null) {
-        this.endpoint = this.base_url + endpoint;
-        let response = await this.request("DELETE", null, authenticated, jwt_token)
-        return response;
-    }
-	*/
+
 	return (
 		<div>
 			<table className="table">
