@@ -92,9 +92,10 @@ const LessonsDashboard = () => {
 			);
 	}
 
-	const createFormation = async (event) => {
-		event.preventDefault();
 
+	const createFormation = async (event) => {
+
+		event.preventDefault();
 		const form = event.currentTarget;
 		const categories_id = new Array;
 		const formdata = new FormData(form);
@@ -117,14 +118,10 @@ const LessonsDashboard = () => {
 			`/formations`,
 			true,
 			Cookies.get("jwt_token")
-			)
-			
-			.then((response) => console.log(response.json()))
-		// categories_id.forEach((category_id) => {
-		// 	createFormationCategories(category_id);
-		// })
-			.then((promise) => handleClose())
-			.catch((error) => console.error(error))
+		).then((e)=>e.json());
+		
+		console.log(response)
+
 	}
 
 	const deleteFormation = async (formation) => {
