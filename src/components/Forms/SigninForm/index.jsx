@@ -60,18 +60,17 @@ const SigninForm = () => {
     Cookies.set("jwt_token", jwt)
 
     // accessing data of response
-    const current_user = await response.json().data;
+    const data = await response.json();
+    const {email: userEmail} = data.data.attributes;
+    const {id: userId} = data.data;
 
     // constructing payload
     const payload = {
-      current_user
+      id: userId, email: userEmail
     }
 
     // dispatching action to redux store
-    dispatch({
-      type: "SET_CURRENT_USER",
-      payload
-    });
+    dispatch(setCurrentUser(payload));
 
     history.push("/")
   }
@@ -95,7 +94,7 @@ const SigninForm = () => {
         </div>
 
       </div>
-      
+
     </div>
   );
 };
