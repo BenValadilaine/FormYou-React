@@ -7,5 +7,11 @@ const setCurrentUser = (current_user) => {
   }
 }
 
+const removeCurrentUser = () => {
+  return {
+    type: "REMOVE_CURRENT_USER"
+  }
+}
 
-export { setCurrentUser }
+
+export { setCurrentUser, removeCurrentUser }

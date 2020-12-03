@@ -25,7 +25,6 @@ class ApiRequest {
 
         options = body ? { ...options, ...{ body: JSON.stringify(body) } } : options;
 
-
         // executing call to api
         let api_response = await fetch(this.endpoint, options)
             .then((response) => response)
@@ -39,6 +38,7 @@ class ApiRequest {
     // WRAPPER POST CREATE METHOD
     async create(datas, endpoint, authenticated = false, jwt_token = null) {
         this.endpoint = this.base_url + endpoint;
+
         let response = await this.request("POST", datas, authenticated, jwt_token);
         return response;
     }

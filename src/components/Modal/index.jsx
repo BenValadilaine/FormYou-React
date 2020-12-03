@@ -3,7 +3,7 @@ import modalContext from "../../context/modalContext";
 import ModalCloseIcon from "../../assets/icons/modal/close_modal.png";
 import "./index.scss"
 
-const Modal = () => {
+const Modal = ({ modalContent: ModalContent, datas }) => {
 
     const { isModalOpen, setModalIsOpen } = useContext(modalContext);
 
@@ -18,11 +18,11 @@ const Modal = () => {
 
         isModalOpen && (
 
-            <div className="col-md-6 offset-md-3 col-12 p-4 bg-light my-auto shadow-sm" id="modal">
+            <div className="col-md-3 col-12 bg-white my-auto shadow-sm d-flex flex-column justify-content-around" id="modal">
 
                 <img src={ModalCloseIcon} alt="fermer le menu" id="close-modal" onClick={handleCloseModal} />
 
-
+                <ModalContent {...datas} />
             </div>
         )
     )
