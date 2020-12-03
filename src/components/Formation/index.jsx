@@ -1,11 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { capitalize } from "../../helpers/string";
 import "./index.scss";
 
 const Formation = ({ id, title, description, created_at, updated_at }) => {
 
-    // hooks to access browser history api using react router dom
+    
     const history = useHistory()
 
     // helper to for redirection redirect
@@ -13,6 +13,7 @@ const Formation = ({ id, title, description, created_at, updated_at }) => {
         history.push(url)
 
     }
+
 
     return (
         <div className="card p-4 border-rounded" onClick={() => redirect(`/formation/${id}`)} id={id}>
