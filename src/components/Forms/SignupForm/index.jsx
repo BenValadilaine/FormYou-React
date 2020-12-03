@@ -5,7 +5,6 @@ import FormGroup from "../../FormGroup/index";
 import API_REQUEST from "../../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../../services/ApiRequest/config/config.js";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../../redux/actions";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
 
@@ -26,7 +25,7 @@ const SignupForm = () => {
 	const handleClick = (event) => {
 		event.preventDefault();
 
-		if (currentStep == 1) {
+		if (currentStep === 1) {
 			let firstname = document.querySelector("#firstname").value;
 			let lastname = document.querySelector("#lastname").value;
 			let email = document.querySelector("#email").value;
@@ -147,7 +146,7 @@ const SignupForm = () => {
 					className="col-lg-6 col-12 bg-white px-4 d-block overflow-auto"
 					style={{ height: "75vh", paddingTop: "5rem" }}
 				>
-					{currentStep == 2 && (
+					{currentStep === 2 && (
 						<svg
 							onClick={(event) => {
 								handleClick(event);
@@ -170,7 +169,7 @@ const SignupForm = () => {
 
 						<div className="row d-flex flex-wrap my-4">
 							<div className="col-8 d-flex align-item-center">
-								{currentStep == 1 ? (
+								{currentStep === 1 ? (
 									<h5>Informations de connexion</h5>
 								) : (
 									<h5>Type de compte </h5>
@@ -181,7 +180,7 @@ const SignupForm = () => {
 							</div>
 						</div>
 
-						{currentStep == 1 ? (
+						{currentStep === 1 ? (
 							<>
 								<FormGroup
 									label="Prenom:"

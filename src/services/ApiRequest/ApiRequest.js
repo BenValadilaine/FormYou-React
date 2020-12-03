@@ -1,4 +1,3 @@
-import jwt_decode from "jwt-decode";
 import Cookies from 'js-cookie'
 import { API_BASE_URL } from "./config/config.js"
 

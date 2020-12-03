@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./assets/scss/main.scss";
 import {
 	BrowserRouter as Router,
@@ -13,19 +13,17 @@ import SignupPage from "./pages/Signup";
 import Profile from "./pages/Profile";
 import FormationsPage from "./pages/Formations";
 import FormationPage from "./pages/Formation";
-import Admin from './pages/Admin';
-import isUserSignIn from './helpers/signActions';
+import Admin from "./pages/Admin";
+import isUserSignIn from "./helpers/signActions";
+import isAdmin from "./helpers/isAdmin";
 import modalContext from "./context/modalContext";
-import Modal from './components/Modal/index';
-import ModalContentEvent from './components/ModalContentEvent/index';
-
+import Modal from "./components/Modal/index";
+import ModalContentEvent from "./components/ModalContentEvent/index";
 
 const App = () => {
-
 	const [isModalOpen, setModalIsOpen] = useState(false);
 	const [modalContent, setModalContent] = useState(null);
-	const [modalDatas, setModalDatas] = useState(null)
-
+	const [modalDatas, setModalDatas] = useState(null);
 
 	//Private routes who do not need authentification
 	const UnAuthRoute = ({ component: Component, ...rest }) => (
@@ -35,8 +33,8 @@ const App = () => {
 				isUserSignIn() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
-						<Component {...props} />
-					)
+					<Component {...props} />
+				)
 			}
 		/>
 	);
@@ -49,16 +47,35 @@ const App = () => {
 				isUserSignIn() ? (
 					<Component {...props} />
 				) : (
-						<Redirect to={{ pathname: "/signin" }} />
-					)
+					<Redirect to={{ pathname: "/signin" }} />
+				)
+			}
+		/>
+	);
+
+	const AdminRoute = ({ component: Component, ...rest }) => (
+		<Route
+			{...rest}
+			render={(props) =>
+				isAdmin() ? (
+					<Component {...props} />
+				) : (
+					<Redirect to={{ pathname: "/" }} />
+				)
 			}
 		/>
 	);
 
 	return (
-
-
-		<modalContext.Provider value={{ isModalOpen, setModalIsOpen, modalContent, setModalContent, setModalDatas }}>
+		<modalContext.Provider
+			value={{
+				isModalOpen,
+				setModalIsOpen,
+				modalContent,
+				setModalContent,
+				setModalDatas,
+			}}
+		>
 			<div className="App">
 				<Router>
 					<Navbar />
