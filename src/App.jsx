@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./assets/scss/main.scss";
 import {
 	BrowserRouter as Router,
@@ -13,17 +13,15 @@ import SignupPage from "./pages/Signup";
 import Profile from "./pages/Profile";
 import FormationsPage from "./pages/Formations";
 import FormationPage from "./pages/Formation";
-import Admin from './pages/Admin';
-import isUserSignIn from './helpers/signActions';
+import Admin from "./pages/Admin";
+import isUserSignIn from "./helpers/signActions";
+import isAdmin from "./helpers/isAdmin";
 import modalContext from "./context/modalContext";
-import Modal from './components/Modal/index';
-
+import Modal from "./components/Modal/index";
 
 const App = () => {
-
 	const [isModalOpen, setModalIsOpen] = useState(false);
-	const [modalContent, setModalContent] = useState("default")
-
+	const [modalContent, setModalContent] = useState("default");
 
 	//Private routes who do not need authentification
 	const UnAuthRoute = ({ component: Component, ...rest }) => (
@@ -33,8 +31,8 @@ const App = () => {
 				isUserSignIn() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
-						<Component {...props} />
-					)
+					<Component {...props} />
+				)
 			}
 		/>
 	);
@@ -47,14 +45,29 @@ const App = () => {
 				isUserSignIn() ? (
 					<Component {...props} />
 				) : (
-						<Redirect to={{ pathname: "/signin" }} />
-					)
+					<Redirect to={{ pathname: "/signin" }} />
+				)
+			}
+		/>
+	);
+
+	const AdminRoute = ({ component: Component, ...rest }) => (
+		<Route
+			{...rest}
+			render={(props) =>
+				isAdmin() ? (
+					<Component {...props} />
+				) : (
+					<Redirect to={{ pathname: "/" }} />
+				)
 			}
 		/>
 	);
 
 	return (
-		<modalContext.Provider value={{ isModalOpen, setModalIsOpen, modalContent, setModalContent }}>
+		<modalContext.Provider
+			value={{ isModalOpen, setModalIsOpen, modalContent, setModalContent }}
+		>
 			<div className="App">
 				<Router>
 					<Navbar />
@@ -71,13 +84,13 @@ const App = () => {
 							</Route>
 							<UnAuthRoute path="/signin" component={SigninPage} />
 							<UnAuthRoute path="/signup" component={SignupPage} />
-							<UnAuthRoute path="/profile" component={Profile} />
-							<AuthRoute path="/admin" component={Admin} />
+							<AuthRoute path="/profile" component={Profile} />
+							<AdminRoute path="/admin" component={Admin} />
 						</Switch>
 					</section>
 				</Router>
 			</div>
-			<Modal/>
+			<Modal />
 		</modalContext.Provider>
 	);
 };

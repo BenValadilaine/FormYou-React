@@ -3,22 +3,28 @@ import { Link } from "react-router-dom";
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
 import { API_ENDPOINTS } from "../../services/ApiRequest/config/config";
 import "./index.scss";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
+
+import isAdmin from "../../helpers/isAdmin";
 
 const Navbar = () => {
-
 	const handleSignOut = async () => {
 		if (Cookies.get("jwt_token")) {
-			let response = await API_REQUEST.delete(API_ENDPOINTS['signout'], true, Cookies.get("jwt_token"));
-			Cookies.remove('jwt_token');
+			let response = await API_REQUEST.delete(
+				API_ENDPOINTS["signout"],
+				true,
+				Cookies.get("jwt_token"),
+			);
+			Cookies.remove("jwt_token");
 		}
-	}
+	};
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light">
 			<Link to="/" className="navbar-brand" id="nav-brand" title="home">
 				FormYou
 			</Link>
+			<button onClick={() => isAdmin()}>isAdmin</button>
 			<button
 				className="navbar-toggler"
 				type="button"
