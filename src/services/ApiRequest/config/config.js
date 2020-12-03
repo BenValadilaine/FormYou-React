@@ -1,5 +1,3 @@
-import jwt_decode from "jwt-decode";
-
 // API CONFIG
 const API_BASE_URL = "https://form-you-api.herokuapp.com/api"
 
