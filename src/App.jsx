@@ -93,7 +93,7 @@ const App = () => {
 							<UnAuthRoute path="/signin" component={SigninPage} />
 							<UnAuthRoute path="/signup" component={SignupPage} />
 							<AuthRoute path="/profile" component={Profile} />
-							<AdminRoute path="/admin" component={Admin} />
+							<AuthRoute path="/admin" component={Admin} />
 						</Switch>
 					</section>
 					<Modal modalContent={modalContent} datas={modalDatas} />

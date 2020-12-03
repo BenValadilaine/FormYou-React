@@ -2,6 +2,7 @@ import React from 'react';
 import FormationSessionCalendar from '../components/FormationSessionCalendar';
 // import { FormattedMessage } from 'react-intl';
 import EditProfileForm from '../components/Forms/EditProfileForm/index';
+import FormationAttendancesCalendar from '../components/FormationAttendancesCalendar/index';
 
 const Profile = () => {
   return (
@@ -15,9 +16,7 @@ const Profile = () => {
         <div className="col-lg-7 col-12 d-block overflow-auto bg-white p-0" id="container-card-room">
 
 
-          {
-            // new component to show the user formation_attendances
-          }
+          <FormationAttendancesCalendar/>
 
 
         </div>

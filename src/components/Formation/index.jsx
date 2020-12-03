@@ -2,10 +2,11 @@ import React from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { capitalize } from "../../helpers/string";
 import "./index.scss";
+import firstNWords from '../../helpers/firstTenWords';
 
 const Formation = ({ id, title, description, created_at, updated_at }) => {
 
-    
+
     const history = useHistory()
 
     // helper to for redirection redirect
@@ -32,7 +33,9 @@ const Formation = ({ id, title, description, created_at, updated_at }) => {
 
                     <h5>{capitalize(title)}</h5>
 
-                    <p>{description}</p>
+                    {
+                        description && <p>{firstNWords(description)}</p>
+                    }
 
                 </div>
 
