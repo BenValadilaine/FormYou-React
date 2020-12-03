@@ -16,111 +16,89 @@ const SigninForm = () => {
 	// importing dipatch actions
 	const dispatch = useDispatch();
 
-	// importing history form react router dom
-	const history = useHistory();
+  // importing history form react router dom
+  const history = useHistory();
 
-	//analysing submit form
-	const handleSubmit = (event) => {
-		event.preventDefault();
+  //analysing submit form
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-		const form = event.currentTarget;
-		const formdata = new FormData(form);
+    const form = event.currentTarget;
+    const formdata = new FormData(form);
 
-		const email = formdata.get("email");
-		const password = formdata.get("password");
+    const email = formdata.get("email");
+    const password = formdata.get("password");
 
-		setUserDatas({ ...userDatas, email: email, password: password });
-	};
+    setUserDatas({ ...userDatas, email: email, password: password });
+  }
 
-	// launch handle registration when userdatas update
-	useEffect(() => {
-		handleRegistration();
-	}, [userDatas]);
+  // launch handle registration when userdatas update
+  useEffect(() => {
+    handleRegistration();
+  }, [userDatas])
 
-	const handleRegistration = async () => {
-		if (!userDatas) {
-			return;
-		}
+  const handleRegistration = async () => {
 
-		// destructuring object userDatas state containing user registration infos
-		const { email, password } = userDatas;
+    if (!userDatas) { return }
 
-		// request to /signup token
-		const response = await API_REQUEST.signIn(
-			{
-				user: {
-					email: email,
-					password: password,
-				},
-			},
-			API_ENDPOINTS["signin"],
-		);
+    // destructuring object userDatas state containing user registration infos
+    const { email, password } = userDatas
 
-		// accessing jwt token
-		const jwt = response.headers.get("Authorization");
-		Cookies.set("jwt_token", jwt);
+    // request to /signup token
+    const response = await API_REQUEST.signIn(
+      {
+        user: {
+          email: email,
+          password: password
+        }
+      }
+      , API_ENDPOINTS["signin"]);
 
-		// accessing data of response
-		const data = await response.json();
-		const { email: userEmail } = data.data.attributes;
-		const { id: userId } = data.data;
+    // accessing jwt token
+    const jwt = response.headers.get("Authorization");
 
-		// constructing payload
-		const payload = {
-			id: userId,
-			email: userEmail,
-		};
+    if (jwt) {
+      Cookies.set("jwt_token", jwt)
 
-		// dispatching action to redux store
-		dispatch(setCurrentUser(payload));
+      // accessing data of response
+      const data = await response.json();
+      const { email: userEmail } = data.data.attributes;
+      const { id: userId } = data.data;
 
-		history.push("/");
-	};
+      // constructing payload
+      const payload = {
+        id: userId, email: userEmail
+      }
 
-	return (
-		<div
-			className="container d-flex flex-column justify-content-center"
-			style={{ minHeight: "95vh" }}
-		>
-			<div className="row col-12 border-0 p-0 border-neumorphic">
-				<div className="col-6 p-0 d-none d-lg-block" style={{ height: "75vh" }}>
-					<img
-						src={signinImage}
-						alt="signin image"
-						className="h-100 w-100 m-0 p-0"
-					/>
-				</div>
+      // dispatching action to redux store
+      dispatch(setCurrentUser(payload));
+      localStorage.setItem("current_user", JSON.stringify(payload));
+      history.push("/")
+    }
+  }
 
-				<div
-					className="col-lg-6 col-12 bg-white p-4 d-flex flex-column justify-content-around"
-					style={{ height: "75vh" }}
-				>
-					<form action="" onSubmit={handleSubmit}>
-						<h1 className="my-5">CONNEXION</h1>
-						<FormGroup
-							label="Adresse email:"
-							inputName="email"
-							inputId="email"
-							inputType="text"
-							placeholder="email@example.com"
-						/>
-						<FormGroup
-							label="Mot de passe:"
-							inputName="password"
-							inputId="password"
-							inputType="password"
-						/>
-						<button
-							className="btn btn-scheme-2 btn-lg col-12 my-4"
-							type="submit"
-						>
-							VALIDER
-						</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <div className="container d-flex flex-column justify-content-center" style={{ minHeight: "95vh" }}>
+
+      <div className="row col-12 border-0 p-0 border-neumorphic">
+
+        <div className="col-6 p-0 d-none d-lg-block" style={{ height: "75vh" }}>
+          <img src={signinImage} alt="signin image" className="h-100 w-100 m-0 p-0" />
+        </div>
+
+        <div className="col-lg-6 col-12 bg-white p-4 d-flex flex-column justify-content-around" style={{ height: "75vh" }}>
+          <form action="" onSubmit={handleSubmit}>
+            <h1 className="my-5">CONNEXION</h1>
+            <FormGroup label="Adresse email:" inputName="email" inputId="email" inputType="text" placeholder="email@example.com" />
+            <FormGroup label="Mot de passe:" inputName="password" inputId="password" inputType="password" />
+            <button className="btn btn-scheme-2 btn-lg col-12 my-4" type="submit" >VALIDER</button>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  );
 };
 
 export default SigninForm;
