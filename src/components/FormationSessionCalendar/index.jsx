@@ -62,6 +62,7 @@ const FormationSessionCalendar = ({ formation_id, formation }) => {
         const fetchFormationSessions = async () => {
             const response = await API_REQUEST.find(API_ENDPOINTS["formations"] + `/${formation_id}/formation_sessions`);
 
+
             const formation_sessions = response.map(({ start_date, end_date, ...rest }) => {
                 return {
 

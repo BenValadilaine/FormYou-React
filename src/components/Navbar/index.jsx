@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux";
 import API_REQUEST from "../../services/ApiRequest/ApiRequest";
@@ -12,6 +12,13 @@ const Navbar = () => {
 	const [isConnected, setIsConnected] = useState(false);
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.current_user);
+	const history = useHistory()
+
+	// helper to for redirection redirect
+	const redirect = (url) => {
+		history.push(url)
+
+	}
 
 	const handleSignOut = async () => {
 		if (Cookies.get("jwt_token")) {
@@ -22,6 +29,7 @@ const Navbar = () => {
 			);
 			Cookies.remove("jwt_token");
 			dispatch(removeCurrentUser());
+			redirect('/');
 		}
 	};
 
