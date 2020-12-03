@@ -1,19 +1,16 @@
-/* ==== EXAMPLE ====
-const my_reducer = (state='value', action) => {
-  switch(action.type){
-    case "ACTION" :
-      return state + 1;
-    case "ANOTHERACTION" :
-      return state + action.playload;
+const initialState = {
+  current_user: null
+}
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "SET_CURRENT_USER":
+      return {current_user: action.payload};
+    case "REMOVE_CURRENT_USER":
+      return initialState;
     default:
-      return state;
+      return {...state};
   }
 }
 
-export default my_reducer;
-
-==== TO USE IT FROM ANOTHER COMPONENT ====
-import {useSelector} from 'react-redux';
-
-const my_reducer = useSelector(state => state.my_reducer);
-*/
+export default reducer;

@@ -1,25 +1,17 @@
-/* ==== EXAMPLE ====
-export const action = () => {
+
+
+const setCurrentUser = (current_user) => {
   return {
-    type: 'ACTION',
+    type: "SET_CURRENT_USER",
+    payload: current_user
   }
 }
 
-export const actionWithProps = (props) => {
+const removeCurrentUser = () => {
   return {
-    type: 'ANOTHERACTION',
-    playload: props
+    type: "REMOVE_CURRENT_USER"
   }
 }
 
 
-==== TO CALL THEM IN ANOTHER COMPONENT ====
-import {useDispatch} from 'react-redux';
-import { action, actionWithProps } from '../redux/actions';
-
-const dispatch = useDispatch();
-dispatch(action());
-dispatch(actionWithProps(props));
-
-
-*/
+export { setCurrentUser, removeCurrentUser }
