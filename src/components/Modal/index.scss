@@ -1,13 +1,26 @@
 #modal {
     position: fixed;
     z-index: 5000;
+    border-radius: 25px;
+    padding:4rem;
+    #close-modal{
+
+        height: 2rem;
+        width:2rem;
+        position: absolute;
+        top:1.5rem;
+        left:1.5rem;
+        cursor: pointer;
+    
+    }
 }
 
 @media screen and (min-width: 768px) {
     #modal {
-        height: 75vh;
+        height: 66vh;
         top: 50%;
         bottom: 50%;
+        left:40%;
     }
 }
 
@@ -19,3 +32,4 @@
         right: 0;
     }
 }
+
