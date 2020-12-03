@@ -25,6 +25,7 @@ class ApiRequest {
 
         options = body ? { ...options, ...{ body: JSON.stringify(body) } } : options;
 
+
         // executing call to api
         let api_response = await fetch(this.endpoint, options)
             .then((response) => response)

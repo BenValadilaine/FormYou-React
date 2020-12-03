@@ -22,14 +22,13 @@ const FormationAttendancesCalendar = () => {
 
     const [fomationsAttendances, setfomationsAttendances] = useState([]);
 
-
-    const { isModalOpen, setModalIsOpen, setModalContent , setModalDatas } = useContext(modalContext);
+    const { isModalOpen, setModalIsOpen, setModalContent, setModalDatas } = useContext(modalContext);
 
     // event return datas from big calendar as 
     //{title: "Super formation", start: "2020-12-02T08:54:20.396Z", end: "2020-12-03T08:54:20.396Z, allDay:true}
 
     const handleSelectEvent = (event) => {
-        setModalDatas({...event})
+        setModalDatas({ ...event })
         setModalContent(() => {
             return ModalContentEvent;
         })
@@ -37,28 +36,9 @@ const FormationAttendancesCalendar = () => {
     }
 
 
+
+
     useEffect(() => {
-
-
-        // BIG CALENDAR DATA FORMAT
-
-        // {
-        //     title: "test",
-        //     start: Date.now(),
-        //     end: Date.now() + 3600 * 24,
-        //     allDay: true
-        // }
-
-        // API DATA FORMAT
-
-        // capacity: 20
-        // created_at: "2020-12-02T08:54:20.379Z"
-        // end_date: "2020-12-03T08:54:20.360Z"
-        // formation_id: 2
-        // id: 1
-        // room_id: 10
-        // start_date: "2020-12-02T08:54:20.360Z"
-        // updated_at: "2020-12-02T08:54:20.379Z"
 
         const fetchFormationAttendances = async () => {
 
@@ -66,20 +46,32 @@ const FormationAttendancesCalendar = () => {
 
             const response = await API_REQUEST.find(API_ENDPOINTS["users"] + `/${user_id}/formation_attendances`);
 
-            const promises = await response.map((formation_attendance)=>API_REQUEST.find(API_ENDPOINTS["formations"]+`/${formation_attendance.formation_id}`));
+            const promises_formations = await response.map((formation_attendance) => API_REQUEST.find(API_ENDPOINTS["formations"] + `/${formation_attendance.formation_id}`));
 
-            const related_formations = await Promise.all(promises).then((formations)=> formations);
+            const related_formations = await Promise.all(promises_formations).then((formations) => formations);
+
+            const promises_formation_sessions = await response.map((formation_attendance) => API_REQUEST.find(API_ENDPOINTS["formation_sessions"] + `/${formation_attendance.formation_session_id}`));
+
+            const related_formation_sessions = await Promise.all(promises_formation_sessions).then((formation_sessions) => formation_sessions)
 
             const formation_attendances = response.map((formation_attendance, index) => {
+
                 return {
 
-                    ...formation_attendance,
-                    formation:related_formations[index]
+                    title: related_formations[index].title,
+                    start: related_formation_sessions[index].start_date,
+                    end: related_formation_sessions[index].end_date,
+                    allDay: true,
+                    resource: {
+                        formation: related_formations[index],
+                        formation_session: related_formation_sessions[index],
+                        formation_attendance: response
+                    }
                 }
             });
-           console.log(formation_attendances);
 
-            //setfomationsAttendances(formation_attendances);
+
+            setfomationsAttendances(formation_attendances);
         }
 
         fetchFormationAttendances()

@@ -11,7 +11,8 @@ const API_ENDPOINTS = {
     "formations": "/formations",
     "roles": "/roles",
     "categories": "/categories",
-    "formation_attendances": "/formation_attendances"
+    "formation_attendances": "/formation_attendances",
+    "formation_sessions":"/formation_sessions"
 }
 
 
