@@ -87,9 +87,7 @@ const App = () => {
 							<Route exact path="/formations">
 								<FormationsPage />
 							</Route>
-							<AuthRoute exact path="/formation/:id">
-								<FormationPage />
-							</AuthRoute>
+							<AuthRoute exact path="/formation/:id" component={FormationPage} />
 							<UnAuthRoute path="/signin" component={SigninPage} />
 							<UnAuthRoute path="/signup" component={SignupPage} />
 							<AuthRoute path="/profile" component={Profile} />
