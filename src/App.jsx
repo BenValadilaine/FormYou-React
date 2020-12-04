@@ -33,8 +33,8 @@ const App = () => {
 				isUserSignIn() ? (
 					<Redirect to={{ pathname: "/" }} />
 				) : (
-					<Component {...props} />
-				)
+						<Component {...props} />
+					)
 			}
 		/>
 	);
@@ -47,8 +47,8 @@ const App = () => {
 				isUserSignIn() ? (
 					<Component {...props} />
 				) : (
-					<Redirect to={{ pathname: "/signin" }} />
-				)
+						<Redirect to={{ pathname: "/signin" }} />
+					)
 			}
 		/>
 	);
@@ -60,8 +60,8 @@ const App = () => {
 				isAdmin() ? (
 					<Component {...props} />
 				) : (
-					<Redirect to={{ pathname: "/" }} />
-				)
+						<Redirect to={{ pathname: "/" }} />
+					)
 			}
 		/>
 	);
@@ -87,9 +87,7 @@ const App = () => {
 							<Route exact path="/formations">
 								<FormationsPage />
 							</Route>
-							<Route exact path="/formation/:id">
-								<FormationPage />
-							</Route>
+							<AuthRoute exact path="/formation/:id" component={FormationPage} />
 							<UnAuthRoute path="/signin" component={SigninPage} />
 							<UnAuthRoute path="/signup" component={SignupPage} />
 							<AuthRoute path="/profile" component={Profile} />

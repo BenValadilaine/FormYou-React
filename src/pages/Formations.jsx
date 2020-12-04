@@ -13,12 +13,18 @@ const FormationsPage = () => {
     const [categories, setCategories] = useState([]);
 
     // STATE CONTAINING CURRENT FILTERS APPLIED ON THE FORMATION DISPLAY
-    const [searchFilters, setSearchFilters] = useState([])
+    const [searchFilters, setSearchFilters] = useState([]);
+
+    const [searchValue, setSearchValue] = useState("");
 
     // FUNCTION TO FETCH AND SET FORMATION STATE
     const fetchAndSetFormations = async () => {
         const formation_datas = await API_REQUEST.find(API_ENDPOINTS["formations"]);
         setFormations(formation_datas);
+    }
+
+    const handleSearchValue = (value) => {
+        setSearchValue(value);
     }
 
     // FETCH AND SET FORMATION STATE AT FIRST LOAD OF THE PAGE (NO DEPENDENCIES)
@@ -50,7 +56,32 @@ const FormationsPage = () => {
         fetchFormations();
 
 
-    }, [searchFilters])
+    }, [searchFilters]);
+
+
+    useEffect(() => {
+
+
+        const fetchFormations = async () => {
+            const formations = await API_REQUEST.find(API_ENDPOINTS["formations"]);
+            if (searchValue.length > 2) {
+                setFormations([]);
+                const regexp = new RegExp(searchValue.toLowerCase(), 'g')
+                const selected_formations = formations.filter((formation) => {
+                    return formation.title.toLowerCase().match(regexp)?.length > 0 || formation.description.toLowerCase().match(regexp)?.length > 0
+                });
+
+                setFormations(selected_formations)
+            } else {
+                setFormations(formations)
+            }
+        }
+
+
+        fetchFormations();
+
+
+    }, [searchValue])
 
     // RENDER
     return (
@@ -77,7 +108,7 @@ const FormationsPage = () => {
 
                 <div className="col-lg-3 d-lg-block d-none offset-lg-1">
 
-                    <CardSearch categories={categories} searchFilters={(values) => setSearchFilters(values)} />
+                    <CardSearch categories={categories} searchValue={searchValue} searchFilters={(values) => setSearchFilters(values)} setSearchValue={(value) => handleSearchValue(value)} />
 
                 </div>
             </div>
